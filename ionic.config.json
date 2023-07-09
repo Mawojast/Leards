@@ -1,0 +1,8 @@
+{
+  "name": "tesxt",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "b6d5613b"
+}
