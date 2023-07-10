@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Stack } from '../interfaces/stack';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
+import { OverlayEventDetail } from '@ionic/core/components';
 import { Card } from '../interfaces/card';
 import { IonModal } from '@ionic/angular';
 
@@ -12,9 +13,16 @@ import { IonModal } from '@ionic/angular';
 })
 export class StackDetailsPage implements OnInit {
 
-  stacks: Stack[];
-  currentStack: Stack;
-  cards: Card[];
+  stacks: Stack[] = [];
+  cards: Card[] = [];
+  currentStack: Stack = {
+    id: 0,
+    name: '',
+    background_color: '',
+    font_color: '',
+    editingStackName: ''
+  };
+
 
   toggleEditCheck: boolean = false;
   toggleDeleteCheck: boolean = false;
@@ -24,6 +32,7 @@ export class StackDetailsPage implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
   handlerMessage: string = '';
   roleMessage:string = '';
+
 
   public deleteAlertButtons = [
     {
@@ -85,45 +94,61 @@ export class StackDetailsPage implements OnInit {
       }
     }
 
-    async getHighestCardId() {
+    getHighestCardId(): number {
 
-      const result = await this.leardsStorage.get("cards");
-      const allCards: Card[] = await JSON.parse(result);
-      if (allCards.length === 0) {
+      if (this.cards.length === 0) {
         return 0;
       }
 
-      return allCards.reduce((prevCard, currCard) => {
+      return this.cards.reduce((prevCard, currCard) => {
         return currCard.id > prevCard.id ? currCard : prevCard;
       }).id;
     }
 
-    async createCard(card: Card){
-      alert(this.getHighestCardId);
-      alert(card);
+    async saveCard(card: Card){
+
+      card.id = this.getHighestCardId() + 1;
+      card.stack_id = this.currentStack.id;
+      card.stack_name = this.currentStack.name
+      this.cards.push(card);
+      await this.saveCardsToStorage();
+      await this.loadCardsFromStorage(this.currentStack.id);
+      this.closeCardFormModal()
+    }
+
+    async saveCardsToStorage(){
+
+      await this.leardsStorage.set("cards", JSON.stringify(this.cards));
     }
 
     async deleteCardFromStorage(cardId: number){
 
       const result = await this.leardsStorage.get("cards");
-      const allCards: Card[] = await JSON.parse(result);
-      const cardsToSave: Card[] = allCards.filter(card => card.id !== cardId);
-      await this.leardsStorage.set("cards", JSON.stringify(cardsToSave));
+      if(result){
+        const allCards: Card[] = await JSON.parse(result);
+        const cardsToSave: Card[] = allCards.filter(card => card.id !== cardId);
+        await this.leardsStorage.set("cards", JSON.stringify(cardsToSave));
+      }
     }
 
     async loadStacksFromStorage(stackId: number){
 
       const result = await this.leardsStorage.get("stacks");
-      alert(result);
-      this.stacks = await JSON.parse(result);
-      this.currentStack = this.stacks.find(stack => stack.id === stackId)!;
+      if(result){
+        this.stacks = await JSON.parse(result);
+        this.currentStack = this.stacks.find(stack => stack.id === stackId)!;
+      }
     }
 
     async loadCardsFromStorage(stackId: number){
 
       const result = await this.leardsStorage.get("cards");
-      const allCards: Card[] = await JSON.parse(result);
-      this.cards =  allCards.filter(card => card.stack_id === stackId);
+      if(result){
+        const allCards: Card[] = JSON.parse(result);
+        this.cards =  allCards.filter(card => card.stack_id === stackId);
+      }else{
+        this.cards = [];
+      }
     }
 
   ngOnInit() {

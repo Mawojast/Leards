@@ -45,10 +45,12 @@ export class HomePage implements OnInit{
   constructor(private leardsStorage: Storage) {}
 
   async saveStackToStorage(){
+
     await this.leardsStorage.set("stacks", JSON.stringify(this.stacks));
   }
 
   async loadStacksFromStorage(){
+
     const result = await this.leardsStorage.get("stacks");
     this.stacks = JSON.parse(result);
 
@@ -83,6 +85,7 @@ export class HomePage implements OnInit{
   }
 
   getHighestStackId(): number {
+
     if (this.stacks.length === 0) {
       return 0;
     }
@@ -97,8 +100,8 @@ export class HomePage implements OnInit{
     if(stack.editingStackName === '' && stack.id === 0){
       stack.id = this.getHighestStackId() + 1;
       this.stacks.push(stack);
-      this.saveStackToStorage();
-      this.loadStacksFromStorage();
+      await this.saveStackToStorage();
+      await this.loadStacksFromStorage();
     }
     if(stack.editingStackName === stack.name){
       //this.data.updateStack(stack);
@@ -111,15 +114,6 @@ export class HomePage implements OnInit{
     this.closeStackFormModal();
 
   }
-
-  /*closeDB(){
-
-    this.db.close()
-    .then(() => {
-      alert('db closed');
-    })
-    .catch(e => alert(JSON.stringify(e)));
-  }*/
 
   closeStackFormModal(){
 
@@ -154,13 +148,13 @@ export class HomePage implements OnInit{
 
   async deleteStack(){}
 
-
-
   getMessages(): Message[] {
+
     return this.data.getMessages();
   }
 
   ngOnInit(): void {
+
     this.loadStacksFromStorage();
   }
 

@@ -15,6 +15,7 @@
 <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleEditCheck" (ionChange)="toggleEditCard($event)" class="ion-padding">Edit</ion-checkbox>
   <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleDeleteCheck" (ionChange)="toggleDeleteCard($event)" class="ion-padding">Delete</ion-checkbox>
 
+
   <ion-button class="ion-float-right" id="open-card-form-modal" (click)="formMode = 'create'"><ion-icon name="add"></ion-icon></ion-button>
   <ion-modal trigger="open-card-form-modal">
     <ng-template>
@@ -26,8 +27,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-label>kjsdflkjsdklfjlkjsdflkjlkjfsdlk</ion-label>
-        <!--<app-card-create-form *ngIf="formMode == 'create'" (submitStack)="createCard($event)"></app-card-create-form>-->
+        <app-card-create-form *ngIf="formMode == 'create'" (submitStack)="saveCard($event)"></app-card-create-form>
         <!--<app-card-update-form *ngIf="formMode == 'edit'" (submitCard)="updateCard($event)" [editCard]="editCard" [stacks$]="stacks$"></app-card-update-form>-->
       </ion-content>
     </ng-template>
