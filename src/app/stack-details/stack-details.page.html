@@ -28,7 +28,7 @@
       </ion-header>
       <ion-content class="ion-padding">
         <app-card-create-form *ngIf="formMode == 'create'" (submitStack)="saveCard($event)"></app-card-create-form>
-        <!--<app-card-update-form *ngIf="formMode == 'edit'" (submitCard)="updateCard($event)" [editCard]="editCard" [stacks$]="stacks$"></app-card-update-form>-->
+        <app-card-update-form *ngIf="formMode == 'edit'" (submitCard)="updateCard($event)" [editCard]="editCard" [stacks]="stacks"></app-card-update-form>
       </ion-content>
     </ng-template>
   </ion-modal>

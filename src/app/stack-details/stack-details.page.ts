@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Stack } from '../interfaces/stack';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
-import { OverlayEventDetail } from '@ionic/core/components';
 import { Card } from '../interfaces/card';
 import { IonModal } from '@ionic/angular';
 
@@ -85,12 +84,12 @@ export class StackDetailsPage implements OnInit {
       this.modal.present();
     }
 
-    setDeleteResult(ev:any, card: Card) {
+    async setDeleteResult(ev:any, card: Card) {
 
       if(ev.detail.role === 'confirm'){
 
-        this.deleteCardFromStorage(card.id);
-        this.loadCardsFromStorage(this.currentStack.id);
+        await this.deleteCardFromStorage(card.id);
+        await this.loadCardsFromStorage(this.currentStack.id);
       }
     }
 
@@ -111,9 +110,29 @@ export class StackDetailsPage implements OnInit {
       card.stack_id = this.currentStack.id;
       card.stack_name = this.currentStack.name
       this.cards.push(card);
-      await this.saveCardsToStorage();
+      await this.saveCardsToStorage()
       await this.loadCardsFromStorage(this.currentStack.id);
       this.closeCardFormModal()
+    }
+
+    // TODO: change Stack
+    async updateCard(card: Card){
+
+      this.cards.map(cardToUpdate => {
+        if(cardToUpdate.id === card.id){
+          cardToUpdate.front = card.front;
+          cardToUpdate.back = card.back;
+          cardToUpdate.learned = card.learned;
+          //cardToUpdate.stack_id = this.currentStack.id;
+          //cardToUpdate.stack_name = this.currentStack.name;
+        }
+      });
+
+      alert(JSON.stringify(this.cards));
+      await this.saveCardsToStorage()
+      await this.loadCardsFromStorage(this.currentStack.id);
+      alert(JSON.stringify(this.cards));
+      this.closeCardFormModal();
     }
 
     async saveCardsToStorage(){
@@ -123,12 +142,8 @@ export class StackDetailsPage implements OnInit {
 
     async deleteCardFromStorage(cardId: number){
 
-      const result = await this.leardsStorage.get("cards");
-      if(result){
-        const allCards: Card[] = await JSON.parse(result);
-        const cardsToSave: Card[] = allCards.filter(card => card.id !== cardId);
-        await this.leardsStorage.set("cards", JSON.stringify(cardsToSave));
-      }
+      const cardsToSave: Card[] = this.cards.filter(card => card.id !== cardId);
+      await this.leardsStorage.set("cards", JSON.stringify(cardsToSave));
     }
 
     async loadStacksFromStorage(stackId: number){
