@@ -44,7 +44,7 @@ export class HomePage implements OnInit{
 
   constructor(private leardsStorage: Storage) {}
 
-  async saveStackToStorage(){
+  async saveStacksToStorage(){
 
     await this.leardsStorage.set("stacks", JSON.stringify(this.stacks));
   }
@@ -62,7 +62,7 @@ export class HomePage implements OnInit{
       //this.data.deleteStack(stackId);
       //this.stacks$ = this.data.selectStacks();
       this.stacks = this.stacks.filter(stack => stack.id !== stackId);
-      this.saveStackToStorage();
+      this.saveStacksToStorage();
       this.loadStacksFromStorage();
     }
   }
@@ -97,22 +97,34 @@ export class HomePage implements OnInit{
 
   async saveStack(stack: Stack){
 
-    if(stack.editingStackName === '' && stack.id === 0){
-      stack.id = this.getHighestStackId() + 1;
-      this.stacks.push(stack);
-      await this.saveStackToStorage();
-      await this.loadStacksFromStorage();
-    }
-    if(stack.editingStackName === stack.name){
-      //this.data.updateStack(stack);
-    }
-    if(stack.editingStackName !== stack.name && stack.editingStackName !== ""){
-      //this.data.updateStackWithCards(stack);
-    }
-    //this.stacks$ = this.data.selectStacks();
-    //this.getStacks();
-    this.closeStackFormModal();
 
+    stack.id = this.getHighestStackId() + 1;
+    this.stacks.push(stack);
+    await this.saveStacksToStorage();
+    await this.loadStacksFromStorage();
+
+    this.closeStackFormModal();
+  }
+
+  async updateStack(stack: Stack){
+
+    this.stacks.map(stackToUpdate => {
+      if(stackToUpdate.id === stack.id){
+        stackToUpdate.name = stack.name;
+        stackToUpdate.background_color = stack.background_color;
+        stackToUpdate.font_color = stack.font_color;
+      }
+    });
+
+    await this.saveStacksToStorage()
+    await this.loadStacksFromStorage();
+    this.closeStackFormModal();
+  }
+
+  async deleteStackFromStorage(stackId: number){
+
+    const stacksToSave: Stack[] = this.stacks.filter(stack => stack.id !== stackId);
+    await this.leardsStorage.set("stacks", JSON.stringify(stacksToSave));
   }
 
   closeStackFormModal(){
@@ -123,6 +135,7 @@ export class HomePage implements OnInit{
 
   openEditStackModal(stack: Stack){
 
+    this.formMode = 'edit';
     this.editStack = stack;
     this.modal.present();
   }
@@ -143,8 +156,6 @@ export class HomePage implements OnInit{
       }
     });
   }*/
-
-  async updateStack(){}
 
   async deleteStack(){}
 

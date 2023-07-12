@@ -3,5 +3,4 @@ export interface Stack {
   name: string;
   background_color: string;
   font_color: string;
-  editingStackName: string;
 }

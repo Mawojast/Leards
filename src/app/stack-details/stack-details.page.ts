@@ -19,7 +19,6 @@ export class StackDetailsPage implements OnInit {
     name: '',
     background_color: '',
     font_color: '',
-    editingStackName: ''
   };
 
 

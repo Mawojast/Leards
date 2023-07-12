@@ -31,16 +31,27 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <!--<app-stack-form *ngIf="formMode == 'edit'" (submitStack)="saveStack($event)" [editStack]="editStack"></app-stack-form>-->
+        <app-stack-form *ngIf="formMode == 'edit'" (submitStack)="updateStack($event)" [editStack]="editStack"></app-stack-form>
         <app-stack-form *ngIf="formMode == 'create'" (submitStack)="saveStack($event)"></app-stack-form>
       </ion-content>
     </ng-template>
   </ion-modal>
 
   <ion-list>
-    <app-stack *ngFor="let stack of stacks" [stack]="stack"></app-stack>
-  </ion-list>
-  <ion-list>
-    <app-message *ngFor="let message of getMessages()" [message]="message"></app-message>
+    <ion-grid *ngIf="stacks.length > 0">
+      <ion-row *ngFor="let stack of stacks; let i = index">
+        <ion-col size="12" *ngIf="!toggleDeleteCheck && !toggleEditCheck">
+            <app-stack [stack]="stack"></app-stack>
+        </ion-col>
+        <ion-col size="11" *ngIf="toggleDeleteCheck || toggleEditCheck">
+          <app-stack [stack]="stack"></app-stack>
+        </ion-col>
+        <ion-col size="1">
+          <ion-button color="danger" *ngIf="toggleDeleteCheck" [id]="'present-alert-'+stack.id" class="ion-float-right ion-padding stackDeleteButton">Delete</ion-button>
+          <ion-alert *ngIf="toggleDeleteCheck" [trigger]="'present-alert-'+stack.id" [header]="'Delete Card?'" [buttons]="deleteAlertButtons" (didDismiss)="setDeleteResult($event, stack.id)"></ion-alert>
+          <ion-button *ngIf="toggleEditCheck" (click)="openEditStackModal(stack)" color="primary" class="ion-float-right ion-padding">Edit</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-list>
 </ion-content>

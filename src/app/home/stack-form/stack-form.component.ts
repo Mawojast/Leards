@@ -31,10 +31,10 @@ export class StackFormComponent  implements OnInit {
 
     const formValue = this.form.getRawValue();
     if(this.editStack){
-      this.editStack = {...formValue, id: this.editStack.id, editingStackName: this.editStack.editingStackName};
+      this.editStack = {...formValue, id: this.editStack.id};
       alert('edit: '+JSON.stringify(this.editStack));
     }else{
-      this.editStack = {...formValue, id: 0, editingStackName: '' };
+      this.editStack = {...formValue, id: 0};
       alert('insert: '+JSON.stringify(this.editStack))
     }
 
@@ -46,19 +46,17 @@ export class StackFormComponent  implements OnInit {
   ngOnInit() {
 
     if(!this.editStack){
+
+      alert('create');
       this.form.setValue({
         name: '',
         background_color: '#f2f2f2',
         font_color: '#0d0d0d'
       });
 
-      alert('setcreate');
-
-
     }else{
 
       alert('edit');
-      this.editStack.editingStackName = this.editStack.name;
       this.form.setValue({
         name: this.editStack.name,
         background_color: this.editStack.background_color,
@@ -66,5 +64,4 @@ export class StackFormComponent  implements OnInit {
       });
     }
   }
-
 }
