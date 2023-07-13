@@ -9,6 +9,7 @@ import { StackDetailsPageRoutingModule } from './stack-details-routing.module';
 import { StackDetailsPage } from './stack-details.page';
 import { CardCreateFormComponent } from './card-create-form/card-create-form.component';
 import { CardUpdateFormComponent } from './card-update-form/card-update-form.component';
+import { CardComponent } from '../card/card.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { CardUpdateFormComponent } from './card-update-form/card-update-form.com
     IonicModule,
     StackDetailsPageRoutingModule
   ],
-  declarations: [StackDetailsPage, CardCreateFormComponent, CardUpdateFormComponent]
+  declarations: [StackDetailsPage, CardCreateFormComponent, CardUpdateFormComponent, CardComponent]
 })
 export class StackDetailsPageModule {}
