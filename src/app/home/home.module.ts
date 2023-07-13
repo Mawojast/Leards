@@ -6,22 +6,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
-import { MessageComponentModule } from '../message/message.module';
-import { StackComponentModule } from "../stack/stack.module";
+//import { StackComponentModule } from "./stack/stack.module";
 import { StackFormComponent } from './stack-form/stack-form.component';
+import { StackComponent } from './stack/stack.component';
 
 @NgModule({
     declarations: [
       HomePage,
-      StackFormComponent
+      StackFormComponent,
+      StackComponent
     ],
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        MessageComponentModule,
         HomePageRoutingModule,
-        StackComponentModule,
+        //StackComponentModule,
         ReactiveFormsModule
     ]
 })
