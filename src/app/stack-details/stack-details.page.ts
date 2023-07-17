@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 import { Card } from '../interfaces/card';
 import { IonModal } from '@ionic/angular';
+import { CardComponent } from '../card/card.component';
 
 @Component({
   selector: 'app-stack-details',

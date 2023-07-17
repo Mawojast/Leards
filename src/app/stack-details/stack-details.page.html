@@ -37,14 +37,10 @@
       <ion-grid *ngIf="cards.length > 0">
       <ion-row *ngFor="let card of cards; let i = index">
         <ion-col size="12" *ngIf="!toggleDeleteCheck && !toggleEditCheck">
-          <ion-card class="ion-padding" style="font-size: 1.2rem;">
-            <ion-label class="ion-text-center">{{card.front}}</ion-label>
-          </ion-card>
+          <app-card [card]="card"></app-card>
         </ion-col>
         <ion-col size="11" *ngIf="toggleDeleteCheck || toggleEditCheck">
-          <ion-card class="ion-padding"  style="font-size: 1.2rem;">
-            <ion-label class="ion-text-center">{{card.front}}</ion-label>
-          </ion-card>
+          <app-card [card]="card"></app-card>
         </ion-col>
         <ion-col size="1">
           <ion-button color="danger" *ngIf="toggleDeleteCheck" [id]="'present-alert-'+card.id" class="ion-float-right ion-padding stackDeleteButton">Delete</ion-button>

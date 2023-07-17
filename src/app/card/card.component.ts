@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, AfterViewInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Card } from '../interfaces/card';
 
 @Component({
@@ -6,12 +6,41 @@ import { Card } from '../interfaces/card';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
-export class CardComponent  implements OnInit {
+export class CardComponent  implements AfterViewInit {
 
-  @Input() card?: Card;
+  @Input() card: Card;
+  isFlipped: boolean = false;
+  cardHeight: number = 0;
+
+  @ViewChild('frontCard', { static: false }) frontCardRef: ElementRef;
+  @ViewChild('backCard') backCardRef: ElementRef;
 
   constructor() { }
 
-  ngOnInit() {}
+  flipCard() {
+    this.isFlipped = !this.isFlipped;
+  }
 
+  private calculateCardHeight() {
+    const frontCardElement = this.frontCardRef.nativeElement as HTMLElement;
+    const backCardElement = this.backCardRef.nativeElement as HTMLElement;
+    //alert(frontCardElement);
+    //alert(backCardElement);
+
+    if (frontCardElement && backCardElement) {
+      const frontCardHeight = frontCardElement.offsetHeight;
+      const backCardHeight = backCardElement.offsetHeight;
+      this.cardHeight = Math.max(frontCardHeight, backCardHeight);
+      /*alert('front: '+frontCardElement.offsetHeight);
+      alert('back: ' +backCardElement.offsetHeight);
+      alert('back: ' +backCardElement.offsetHeight);
+      alert('CARDhEIGHT : ' +backCardElement.offsetHeight);*/
+      //alert(this.cardHeight);
+    }
+  }
+
+  ngAfterViewInit() {
+    console.log('afterViewINit');
+    this.calculateCardHeight();
+  }
 }
