@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 import { Card } from '../interfaces/card';
 import { IonModal } from '@ionic/angular';
-import { CardComponent } from '../card/card.component';
+import { TranslateConfigService } from '../services/translate-config.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-stack-details',
@@ -15,6 +16,7 @@ export class StackDetailsPage implements OnInit {
 
   stacks: Stack[] = [];
   cards: Card[] = [];
+  language: any;
   currentStack: Stack = {
     id: 0,
     name: '',
@@ -53,7 +55,13 @@ export class StackDetailsPage implements OnInit {
   constructor(
     private activeRoute: ActivatedRoute,
     private leardsStorage: Storage,
-    private router: Router) { }
+    private router: Router,
+    private translateConfigService: TranslateConfigService) {
+      this.translateConfigService.getDefaultLanguage();
+      this.language = this.translateConfigService.getCurrentLang();
+
+      console.log(this.language);
+     }
 
     toggleEditCard(event: any){
 

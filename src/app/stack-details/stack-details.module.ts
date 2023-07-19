@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { IonicModule } from '@ionic/angular';
 
 import { StackDetailsPageRoutingModule } from './stack-details-routing.module';
@@ -15,6 +15,7 @@ import { CardComponent } from '../card/card.component';
   imports: [
     CommonModule,
     FormsModule,
+    TranslateModule,
     ReactiveFormsModule,
     IonicModule,
     StackDetailsPageRoutingModule

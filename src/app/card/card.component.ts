@@ -6,9 +6,11 @@ import { Card } from '../interfaces/card';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
-export class CardComponent  implements AfterViewInit {
+export class CardComponent  implements AfterViewChecked {
 
   @Input() card: Card;
+  @Input() toggleDeleteCheck: boolean;
+  @Input() toggleEditCheck: boolean;
   isFlipped: boolean = false;
   cardHeight: number = 0;
 
@@ -39,7 +41,7 @@ export class CardComponent  implements AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewChecked() {
     console.log('afterViewINit');
     this.calculateCardHeight();
   }

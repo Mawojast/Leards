@@ -1,8 +1,10 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { IonModal, RefresherCustomEvent } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
+import { TranslateConfigService } from '../services/translate-config.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ActionSheetController } from '@ionic/angular';
 
-import { DataService, Message } from '../services/data.service';
 import { Stack } from '../interfaces/stack';
 
 @Component({
@@ -11,12 +13,12 @@ import { Stack } from '../interfaces/stack';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit{
-  private data = inject(DataService);
 
   toggleEditCheck: boolean = false;
   toggleDeleteCheck: boolean = false;
   formMode = 'create';
   editStack: Stack;
+  language: any;
 
   @ViewChild(IonModal) modal: IonModal;
 
@@ -46,7 +48,10 @@ export class HomePage implements OnInit{
    *
    * @param leardsStorage - Object to handle storage
    */
-  constructor(private leardsStorage: Storage) {}
+  constructor(private leardsStorage: Storage, private translateConfigService: TranslateConfigService, public actionSheetController: ActionSheetController) {
+    this.translateConfigService.getDefaultLanguage();
+    this.language = this.translateConfigService.getCurrentLang();
+  }
 
   /**
    * Sets stacks property to Storage with key stacks.
@@ -196,6 +201,31 @@ export class HomePage implements OnInit{
     setTimeout(() => {
       (ev as RefresherCustomEvent).detail.complete();
     }, 3000);
+  }
+
+  async changeLanguage() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Languages',
+      buttons: [{
+        text: 'English',
+        icon: 'language-outline',
+        handler: () => {
+          this.language = 'en';
+          this.translateConfigService.setLanguage('en');
+        }
+      }, {
+        text: 'German',
+        icon: 'language-outline',
+        handler: () => {
+          this.language = 'de';
+          this.translateConfigService.setLanguage('de');
+        }
+      }]
+    });
+    await actionSheet.present();
+
+    const { role, data } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role and data', role, data);
   }
 
   /**
