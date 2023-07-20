@@ -1,18 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Stack } from '../interfaces/stack';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 import { Card } from '../interfaces/card';
 import { IonModal } from '@ionic/angular';
 import { TranslateConfigService } from '../services/translate-config.service';
-import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-stack-details',
   templateUrl: './stack-details.page.html',
   styleUrls: ['./stack-details.page.scss'],
 })
-export class StackDetailsPage implements OnInit {
+export class StackDetailsPage implements OnInit, AfterViewInit {
 
   stacks: Stack[] = [];
   cards: Card[] = [];
@@ -182,6 +182,10 @@ export class StackDetailsPage implements OnInit {
       }catch(error){
         this.router.navigateByUrl('home');
       }
+  }
+
+  ngAfterViewInit(): void {
+    console.log('AfterViewInit - StackDetails');
   }
 
 }

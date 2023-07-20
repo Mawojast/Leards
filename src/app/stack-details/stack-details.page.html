@@ -12,7 +12,7 @@
       <ion-title size="large">{{"page_home_title" | translate}} - {{currentStack.name}}</ion-title>
     </ion-toolbar>
   </ion-header>
-<ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleEditCheck" (ionChange)="toggleEditCard($event)" class="ion-padding">Edit</ion-checkbox>
+  <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleEditCheck" (ionChange)="toggleEditCard($event)" class="ion-padding">Edit</ion-checkbox>
   <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleDeleteCheck" (ionChange)="toggleDeleteCard($event)" class="ion-padding">Delete</ion-checkbox>
 
 
@@ -39,8 +39,8 @@
         <ion-col size="12" *ngIf="!toggleDeleteCheck && !toggleEditCheck">
           <app-card [card]="card" [toggleDeleteCheck]="toggleDeleteCheck" [toggleEditCheck]="toggleEditCheck"></app-card>
         </ion-col>
-        <ion-col size="12" *ngIf="toggleDeleteCheck || toggleEditCheck">
-          <app-card [card]="card"></app-card>
+        <ion-col size="11" *ngIf="toggleDeleteCheck || toggleEditCheck">
+          <app-card [card]="card" [toggleDeleteCheck]="toggleDeleteCheck" [toggleEditCheck]="toggleEditCheck"></app-card>
         </ion-col>
         <ion-col size="1">
           <ion-button color="danger" *ngIf="toggleDeleteCheck" [id]="'present-alert-'+card.id" class="ion-float-right ion-padding stackDeleteButton">Delete</ion-button>

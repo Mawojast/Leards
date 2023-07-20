@@ -1,12 +1,13 @@
 import { Component, ElementRef, Input, AfterViewInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Card } from '../interfaces/card';
 
+
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
-export class CardComponent  implements AfterViewChecked {
+export class CardComponent  implements AfterViewInit {
 
   @Input() card: Card;
   @Input() toggleDeleteCheck: boolean;
@@ -23,7 +24,9 @@ export class CardComponent  implements AfterViewChecked {
     this.isFlipped = !this.isFlipped;
   }
 
-  private calculateCardHeight() {
+  ngAfterViewInit() {
+    console.log('afterViewInit - cardComponent');
+
     const frontCardElement = this.frontCardRef.nativeElement as HTMLElement;
     const backCardElement = this.backCardRef.nativeElement as HTMLElement;
     //alert(frontCardElement);
@@ -41,8 +44,8 @@ export class CardComponent  implements AfterViewChecked {
     }
   }
 
-  ngAfterViewChecked() {
-    console.log('afterViewINit');
-    this.calculateCardHeight();
+  ionViewDidEnter(){
+    console.log('ionViewDidEnter - CardComponent');
+    alert('ionViewDidEnter');
   }
 }

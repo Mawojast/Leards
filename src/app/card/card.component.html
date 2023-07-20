@@ -1,7 +1,8 @@
-<div [ngClass]="!toggleDeleteCheck || !toggleEditCheck ? 'card-container' : ''" [class.flipped]="isFlipped" [ngStyle]="{'height': cardHeight + 'px'}" (click)="flipCard()">
+<ng-container *ngIf="!toggleDeleteCheck && !toggleEditCheck">
+<div class='card-container' [class.flipped]="isFlipped" [ngStyle]="{'height': cardHeight + 'px'}" (click)="flipCard()">
 
     <div #frontCard class="ion-padding ion-text-center card-front">
-      <ion-label class="ion-text-center">{{card.front}}</ion-label>
+      <ion-label class="ion-text-center">{{card.front}}++++++++++++++</ion-label>
     </div>
 
 
@@ -10,3 +11,14 @@
     </div>
 
 </div>
+</ng-container>
+  <ng-container *ngIf="toggleDeleteCheck || toggleEditCheck">
+  <div class='card-container' [ngStyle]="{'height': cardHeight + 'px'}">
+
+    <div #frontCard class="ion-padding ion-text-center card-front">
+      <ion-label class="ion-text-center">{{card.front}}-------------------</ion-label>
+    </div>
+
+  </div>
+</ng-container>
+

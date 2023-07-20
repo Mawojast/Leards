@@ -30,6 +30,7 @@ export class StackFormComponent  implements OnInit {
   submitForm(){
 
     const formValue = this.form.getRawValue();
+    alert(JSON.stringify(formValue));
     if(this.editStack){
       this.editStack = {...formValue, id: this.editStack.id};
       alert('edit: '+JSON.stringify(this.editStack));
