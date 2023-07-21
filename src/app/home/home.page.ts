@@ -136,12 +136,12 @@ export class HomePage implements OnInit{
    * @param stack - new stack to save
    */
   async saveStack(stack: Stack){
-
+    alert('saveStack'+JSON.stringify(stack));
     stack.id = this.getHighestStackId() + 1;
     this.stacks.push(stack);
     await this.saveStacksToStorage();
     await this.loadStacksFromStorage();
-
+    alert('saveStack++++++'+JSON.stringify(this.stacks));
     this.closeStackFormModal();
   }
 

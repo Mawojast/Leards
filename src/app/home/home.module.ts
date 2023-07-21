@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
-//import { StackComponentModule } from "./stack/stack.module";
+import { StackComponentModule } from "./stack/stack.module";
 import { StackFormComponent } from './stack-form/stack-form.component';
 import { StackComponent } from './stack/stack.component';
 
@@ -14,14 +14,14 @@ import { StackComponent } from './stack/stack.component';
     declarations: [
       HomePage,
       StackFormComponent,
-      StackComponent
+
     ],
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
         HomePageRoutingModule,
-        //StackComponentModule,
+        StackComponentModule,
         ReactiveFormsModule,
         TranslateModule
     ]

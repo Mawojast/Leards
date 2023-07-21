@@ -40,7 +40,7 @@ export class CardComponent  implements AfterViewInit {
       alert('back: ' +backCardElement.offsetHeight);
       alert('back: ' +backCardElement.offsetHeight);
       alert('CARDhEIGHT : ' +backCardElement.offsetHeight);*/
-      //alert(this.cardHeight);
+      alert(this.cardHeight);
     }
   }
 

@@ -1,4 +1,4 @@
-/*import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -15,4 +15,4 @@ import { StackComponent } from './stack.component';
   ],
   exports: [StackComponent]
 })
-export class StackComponentModule { }*/
+export class StackComponentModule { }

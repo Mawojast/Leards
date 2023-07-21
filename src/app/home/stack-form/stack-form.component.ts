@@ -54,6 +54,7 @@ export class StackFormComponent  implements OnInit {
         background_color: '#f2f2f2',
         font_color: '#0d0d0d'
       });
+      alert(JSON.stringify(this.form.value));
 
     }else{
 
