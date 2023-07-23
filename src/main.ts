@@ -7,6 +7,10 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 
+import { IonicStorageModule } from '@ionic/storage-angular';
+import { Drivers } from '@ionic/storage';
+import * as cordovaSQLiteDriver from 'localforage-cordovasqlitedriver'
+
 if (environment.production) {
   enableProdMode();
 }
@@ -15,6 +19,13 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     importProvidersFrom(IonicModule.forRoot({})),
+    importProvidersFrom(IonicStorageModule.forRoot({
+      name: "leards",
+      driverOrder: [
+        cordovaSQLiteDriver._driver,
+        Drivers.IndexedDB, Drivers.LocalStorage
+      ],
+    }),),
     provideRouter(routes),
   ],
 });
