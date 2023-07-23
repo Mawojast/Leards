@@ -1,0 +1,8 @@
+{
+	"appId": "net.webbib.leards",
+	"appName": "Leards",
+	"webDir": "www",
+	"server": {
+		"androidScheme": "https"
+	}
+}
