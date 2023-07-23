@@ -7,30 +7,6 @@ import * as cordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 })
 export class StorageService {
 
-  stacks: Stack[] = [
-    {
-      id: 1,
-      name: 'Englisch',
-      background_color: '#abc123',
-      font_color: '123abc',
-      editingStackName: ''
-    },
-    {
-      id: 2,
-      name: 'IT',
-      background_color: '#ff00ab',
-      font_color: '#00fafa',
-      editingStackName: ''
-    },
-    {
-      id: 5,
-      name: 'BWL',
-      background_color: '#aaaaaa',
-      font_color: '#443443',
-      editingStackName: ''
-    }
-  ]
-
   constructor(private storage: Storage) {
     this.init();
   }

@@ -1,8 +1,7 @@
 {
-  "name": "tesxt",
+  "name": "Leards-Standalone",
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular",
-  "id": "b6d5613b"
+  "type": "angular-standalone"
 }

@@ -8,7 +8,9 @@ export class TranslateConfigService {
 
   currentLang: any;
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService,
+  ) {
     this.currentLang = localStorage.getItem('lang');
   }
 
