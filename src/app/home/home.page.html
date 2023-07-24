@@ -13,8 +13,31 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-button class="ion-float-right" id="open-modal"><ion-icon name="add"></ion-icon></ion-button>
+  <ion-modal trigger="open-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="closeStackFormModal()">Cancel</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <app-stack-form  (submitStack)="saveStack($event)"></app-stack-form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <ion-list>
+    <ion-grid *ngIf="stacks.length > 0">
+      <ion-row *ngFor="let stack of stacks; let i = index">
+        <ion-col size="12">
+          <ion-card *ngIf="stack" [routerLink]="'/stack-details/' + stack.id" class="ion-padding"  style="font-size: 1.2rem;">
+            <ion-label class="ion-text-center">{{ stack.name }}</ion-label>
+          </ion-card>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </ion-list>
 </ion-content>

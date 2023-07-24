@@ -10,4 +10,12 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: 'stack-form',
+    loadComponent: () => import('./home/stack-form/stack-form.page').then( m => m.StackFormPage)
+  },
+  {
+    path: 'stack-details/:id',
+    loadComponent: () => import('./stack-details/stack-details.page').then( m => m.StackDetailsPage)
+  },
 ];
