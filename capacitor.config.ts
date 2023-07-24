@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'Leards-Standalone',
+  appId: 'net.webbib.leards',
+  appName: ' Leards',
   webDir: 'www',
   server: {
     androidScheme: 'https'

@@ -75,12 +75,6 @@ MIT
 @ionic/storage-angular
 MIT
 
-@ngx-translate/core
-SEE LICENSE IN LICENSE
-
-@ngx-translate/http-loader
-SEE LICENSE IN LICENSE
-
 ionic-loader
 
 localforage
