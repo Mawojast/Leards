@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup ,FormControl, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -13,6 +13,7 @@ import { Stack } from 'src/app/interfaces/stack';
 })
 export class StackFormPage implements OnInit {
 
+  @Input() editStack?: Stack;
   @Output() submitStack = new EventEmitter<Stack>();
 
   form = new FormGroup({
@@ -33,17 +34,33 @@ export class StackFormPage implements OnInit {
   constructor() { }
 
   submitForm(){
-    const formValue = this.form.getRawValue();
-    let stack: Stack = {...formValue, id: 0};
-    alert('submitted: '+ stack);
-    this.submitStack.emit(stack);
 
+    const formValue = this.form.getRawValue();
+
+    if(!this.editStack){
+      this.editStack = {...formValue, id: 0};
+    }else{
+      this.editStack = {...formValue, id: this.editStack.id};
+    }
+
+    this.submitStack.emit(this.editStack);
   }
   ngOnInit() {
-    this.form.setValue({
-      name: '',
-      background_color: '#f2f2f2',
-      font_color: '#0d0d0d'
-    });
+
+    if(!this.editStack){
+
+      this.form.setValue({
+        name: '',
+        background_color: '#f2f2f2',
+        font_color: '#0d0d0d'
+      });
+    }else{
+
+      this.form.setValue({
+        name: this.editStack.name,
+        background_color: this.editStack.background_color,
+        font_color: this.editStack.font_color
+      });
+    }
   }
 }

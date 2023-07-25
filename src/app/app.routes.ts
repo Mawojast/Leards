@@ -17,5 +17,13 @@ export const routes: Routes = [
   {
     path: 'stack-details/:id',
     loadComponent: () => import('./stack-details/stack-details.page').then( m => m.StackDetailsPage)
+  },  {
+    path: 'card-create-form',
+    loadComponent: () => import('./stack-details/card-create-form/card-create-form.page').then( m => m.CardCreateFormPage)
   },
+  {
+    path: 'card-update-form',
+    loadComponent: () => import('./stack-details/card-update-form/card-update-form.page').then( m => m.CardUpdateFormPage)
+  },
+
 ];
