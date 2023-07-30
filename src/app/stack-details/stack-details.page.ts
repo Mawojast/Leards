@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonModal, IonicModule } from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { Storage } from '@ionic/storage-angular';
 import { Stack } from '../interfaces/stack';
@@ -15,7 +15,7 @@ import { CardUpdateFormPage } from './card-update-form/card-update-form.page';
   templateUrl: './stack-details.page.html',
   styleUrls: ['./stack-details.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, CardCreateFormPage, CardUpdateFormPage]
+  imports: [IonicModule, CommonModule, FormsModule, CardCreateFormPage, CardUpdateFormPage, RouterLink]
 })
 export class StackDetailsPage implements OnInit {
 
@@ -38,6 +38,13 @@ export class StackDetailsPage implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
   handlerMessage: string = '';
   roleMessage:string = '';
+
+  //TODO: Save stack options in store
+  stackLearnOptions = {
+    stack_id: 0,
+    stack: '',
+    cards: '',
+  };
 
   public deleteAlertButtons = [
     {
@@ -77,6 +84,31 @@ export class StackDetailsPage implements OnInit {
     }
     this.toggleDeleteCheck = event.detail.checked;
   }
+
+  toggleStackOptionsStackMixed(event: any){
+
+    if(event.detail.checked === true){
+      this.stackLearnOptions.stack = 'mixed';
+    }else{
+      this.stackLearnOptions.stack = 'ordered';
+    }
+  }
+
+  toggleStackLearnOptionsCards(event: any){
+
+    this.stackLearnOptions.stack = event.detail.value;
+
+  }
+
+  /*toggleStackOptionsCardskFront(event: any){
+
+    if(event.detail.checked === true){
+      this.stackLearnOptions.cards.front = true;
+    }else{
+      this.stackLearnOptions.cards.back = false;
+      this.stackLearnOptions.cards.mixed = false;
+    }
+  }*/
 
   closeCardFormModal(){
 
@@ -172,6 +204,11 @@ export class StackDetailsPage implements OnInit {
 
     const cardsToSave: Card[] = this.cards.filter(card => card.id !== cardId);
     await this.leardsStorage.set("cards", JSON.stringify(cardsToSave));
+  }
+
+  learnStack(){
+
+    this.router.navigate(['/stack-learn', this.currentStack.id, this.stackLearnOptions.stack, this.stackLearnOptions.cards ])
   }
 
   ngOnInit() {

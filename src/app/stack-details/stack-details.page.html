@@ -13,8 +13,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleEditCheck" (ionChange)="toggleEditCard($event)" class="ion-padding">Edit</ion-checkbox>
-  <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleDeleteCheck" (ionChange)="toggleDeleteCard($event)" class="ion-padding">Delete</ion-checkbox>
-
+  <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleDeleteCheck" (ionChange)="toggleDeleteCard($event)" class="ion-padding" >Delete</ion-checkbox>
 
   <ion-button class="ion-float-right" id="open-card-form-modal" (click)="formMode = 'create'"><ion-icon name="add"></ion-icon></ion-button>
   <ion-modal trigger="open-card-form-modal">
@@ -32,8 +31,20 @@
       </ion-content>
     </ng-template>
   </ion-modal>
+  <hr style="border-top: solid 1px lightgray;">
+  <h3>Stack</h3>
+  <ion-checkbox *ngIf="cards.length > 0" (ionChange)="toggleStackOptionsStackMixed($event)" class="ion-padding" >Mixed</ion-checkbox>
 
-  <ion-list style="border-top: solid 1px lightgray;">
+  <h3>Cards</h3>
+  <ion-radio-group (ionChange)="toggleStackLearnOptionsCards($event)">
+    <ion-label>Front</ion-label><ion-radio value="front" aria-label="Primary"></ion-radio>
+    <ion-label>Back</ion-label><ion-radio value="back" aria-label="back"></ion-radio>
+    <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
+  </ion-radio-group>
+
+  <ion-button *ngIf="cards.length > 0" class="ion-float-right" (click)="learnStack()"><ion-icon name="caret-forward-outline"></ion-icon></ion-button>
+  <hr style="border-top: solid 1px lightgray;">
+  <ion-list>
       <ion-grid *ngIf="cards.length > 0">
       <ion-row *ngFor="let card of cards; let i = index">
         <ion-col size="12" *ngIf="!toggleDeleteCheck && !toggleEditCheck">
