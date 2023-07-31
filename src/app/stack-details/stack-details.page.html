@@ -32,12 +32,13 @@
     </ng-template>
   </ion-modal>
   <hr style="border-top: solid 1px lightgray;">
+
   <h3>Stack</h3>
   <ion-checkbox *ngIf="cards.length > 0" (ionChange)="toggleStackOptionsStackMixed($event)" class="ion-padding" >Mixed</ion-checkbox>
 
   <h3>Cards</h3>
-  <ion-radio-group (ionChange)="toggleStackLearnOptionsCards($event)">
-    <ion-label>Front</ion-label><ion-radio value="front" aria-label="Primary"></ion-radio>
+  <ion-radio-group (ionChange)="toggleStackLearnOptionsCards($event)" value="front">
+    <ion-label>Front</ion-label><ion-radio value="front" aria-label="front"></ion-radio>
     <ion-label>Back</ion-label><ion-radio value="back" aria-label="back"></ion-radio>
     <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
   </ion-radio-group>

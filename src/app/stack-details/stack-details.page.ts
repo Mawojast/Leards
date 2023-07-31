@@ -42,8 +42,8 @@ export class StackDetailsPage implements OnInit {
   //TODO: Save stack options in store
   stackLearnOptions = {
     stack_id: 0,
-    stack: '',
-    cards: '',
+    stack: 'ordered',
+    cards: 'front',
   };
 
   public deleteAlertButtons = [
@@ -96,19 +96,9 @@ export class StackDetailsPage implements OnInit {
 
   toggleStackLearnOptionsCards(event: any){
 
-    this.stackLearnOptions.stack = event.detail.value;
+    this.stackLearnOptions.cards = event.detail.value;
 
   }
-
-  /*toggleStackOptionsCardskFront(event: any){
-
-    if(event.detail.checked === true){
-      this.stackLearnOptions.cards.front = true;
-    }else{
-      this.stackLearnOptions.cards.back = false;
-      this.stackLearnOptions.cards.mixed = false;
-    }
-  }*/
 
   closeCardFormModal(){
 
@@ -211,14 +201,15 @@ export class StackDetailsPage implements OnInit {
     this.router.navigate(['/stack-learn', this.currentStack.id, this.stackLearnOptions.stack, this.stackLearnOptions.cards ])
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     try{
       let stackId = parseInt(this.activeRoute.snapshot.paramMap.get('id')!);
-      this.loadStacksFromStorage(stackId);
-      this.loadCardsFromStorage(stackId);
+      await this.loadStacksFromStorage(stackId);
+      await this.loadCardsFromStorage(stackId);
     }catch(error){
       this.router.navigateByUrl('home');
     }
   }
 
 }
+
