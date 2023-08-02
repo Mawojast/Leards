@@ -1,0 +1,8 @@
+<div class='card-container' [class.flipped]="isFlipped" (click)="flipCard()">
+    <div #frontCard class="ion-padding ion-text-center card-front">
+      <ion-label class="ion-text-center">{{card.front}}</ion-label>
+    </div>
+    <div #backCard class="ion-padding ion-text-center card-back">
+      <ion-label class="ion-text-center">{{card.back}}</ion-label>
+    </div>
+</div>

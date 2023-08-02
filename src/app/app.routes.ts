@@ -30,5 +30,4 @@ export const routes: Routes = [
     path: 'stack-learn/:id/:stack-order/:cards-order',
     loadComponent: () => import('./stack-learn/stack-learn.page').then( m => m.StackLearnPage)
   },
-
 ];

@@ -10,4 +10,9 @@
       <ion-title size="large">StackLearn</ion-title>
     </ion-toolbar>
   </ion-header>
+  <swiper-container #swiper (slidechange)="onSlideChange($event)" [loop]="true">
+    <swiper-slide *ngFor="let card of cards; let i = index" [id]="card.id">
+      <app-card-learn [card]="card"></app-card-learn>
+    </swiper-slide>
+  </swiper-container>
 </ion-content>

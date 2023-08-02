@@ -1,17 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 import { Card } from '../interfaces/card';
+import { CardLearnPage } from './card-learn/card-learn.page';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 @Component({
   selector: 'app-stack-learn',
   templateUrl: './stack-learn.page.html',
   styleUrls: ['./stack-learn.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, CardLearnPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class StackLearnPage implements OnInit {
 
@@ -28,6 +34,19 @@ export class StackLearnPage implements OnInit {
     }else{
       this.cards = [];
     }
+  }
+
+  @ViewChild('swiper')
+  swiperRef: ElementRef | undefined;
+
+  logActiveIndex() {
+    console.log(this.swiperRef?.nativeElement.swiper.activeIndex);
+  }
+
+  onSlideChange(e: any ){
+    console.log(e);
+    console.log(this.swiperRef?.nativeElement.swiper);
+
   }
 
   orderStack(stackOrder: string){
