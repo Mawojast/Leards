@@ -30,7 +30,7 @@ export class StackLearnPage implements OnInit {
     const result = await this.leardsStorage.get("cards");
     if(result){
       const allCards: Card[] = JSON.parse(result);
-      this.cards =  allCards.filter(card => card.stack_id === stackId);
+      this.cards =  allCards.filter(card => card.stack_id === stackId && card.learned === 0);
     }else{
       this.cards = [];
     }
@@ -81,6 +81,27 @@ export class StackLearnPage implements OnInit {
         }
       });
     }
+  }
+
+  async setCardToLearned(card: Card){
+
+    this.cards.map(cardToUpdate => {
+      if(cardToUpdate.id === card.id){
+        cardToUpdate.front = card.front;
+        cardToUpdate.back = card.back;
+        cardToUpdate.learned = 1;
+        //cardToUpdate.stack_id = this.currentStack.id;
+        //cardToUpdate.stack_name = this.currentStack.name;
+      }
+    });
+
+    alert(JSON.stringify(this.cards));
+    await this.saveCardsToStorage();
+  }
+
+  async saveCardsToStorage(){
+
+    await this.leardsStorage.set("cards", JSON.stringify(this.cards));
   }
 
   async ngOnInit() {

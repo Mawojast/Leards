@@ -31,20 +31,23 @@
       </ion-content>
     </ng-template>
   </ion-modal>
-  <hr style="border-top: solid 1px lightgray;">
 
-  <h3>Stack</h3>
-  <ion-checkbox *ngIf="cards.length > 0" (ionChange)="toggleStackOptionsStackMixed($event)" class="ion-padding" >Mixed</ion-checkbox>
 
-  <h3>Cards</h3>
-  <ion-radio-group (ionChange)="toggleStackLearnOptionsCards($event)" value="front">
-    <ion-label>Front</ion-label><ion-radio value="front" aria-label="front"></ion-radio>
-    <ion-label>Back</ion-label><ion-radio value="back" aria-label="back"></ion-radio>
-    <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
-  </ion-radio-group>
+  <div id="stackLearnOptionsBox" *ngIf="cards.length > 0">
+    <hr style="border-top: solid 1px lightgray;">
+    <h3>Stack</h3>
+    <ion-checkbox (ionChange)="toggleStackOptionsStackMixed($event)" class="ion-padding" >Mixed</ion-checkbox>
+
+    <h3>Cards</h3>
+    <ion-radio-group (ionChange)="toggleStackLearnOptionsCards($event)" value="front">
+      <ion-label>Front</ion-label><ion-radio value="front" aria-label="front"></ion-radio>
+      <ion-label>Back</ion-label><ion-radio value="back" aria-label="back"></ion-radio>
+      <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
+    </ion-radio-group>
+  </div>
 
   <ion-button *ngIf="cards.length > 0" class="ion-float-right" (click)="learnStack()"><ion-icon name="caret-forward-outline"></ion-icon></ion-button>
-  <hr style="border-top: solid 1px lightgray;">
+
   <ion-list>
       <ion-grid *ngIf="cards.length > 0">
       <ion-row *ngFor="let card of cards; let i = index">

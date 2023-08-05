@@ -179,7 +179,7 @@ export class StackDetailsPage implements OnInit {
     });
 
     alert(JSON.stringify(this.cards));
-    await this.saveCardsToStorage()
+    await this.saveCardsToStorage();
     await this.loadCardsFromStorage(this.currentStack.id);
     alert(JSON.stringify(this.cards));
     this.closeCardFormModal();

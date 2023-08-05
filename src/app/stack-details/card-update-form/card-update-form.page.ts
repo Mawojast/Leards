@@ -54,6 +54,7 @@ export class CardUpdateFormPage implements OnInit {
 
   ngOnInit() {
 
+    console.log(this.editCard);
     if(this.editCard && this.stacks){
       this.form.setValue({
         front: this.editCard.front,

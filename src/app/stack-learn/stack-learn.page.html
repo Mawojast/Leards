@@ -4,15 +4,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [style.height.%]="100">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">StackLearn</ion-title>
     </ion-toolbar>
   </ion-header>
-  <swiper-container #swiper (slidechange)="onSlideChange($event)" [loop]="true">
-    <swiper-slide *ngFor="let card of cards; let i = index" [id]="card.id">
+  <swiper-container #swiper (slidechange)="onSlideChange($event)" [loop]="false">
+    <swiper-slide *ngFor="let card of cards; let i = index" [id]="card.id" style="border: 1px solid black;">
       <app-card-learn [card]="card"></app-card-learn>
+      <ion-button expand="block" (click)="setCardToLearned(card)">Learned</ion-button>
+    </swiper-slide>
+    <swiper-slide>
+      End
     </swiper-slide>
   </swiper-container>
 </ion-content>
