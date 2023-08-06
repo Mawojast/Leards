@@ -20,6 +20,7 @@ import { CardUpdateFormPage } from './card-update-form/card-update-form.page';
 export class StackDetailsPage implements OnInit {
 
   stacks: Stack[] = [];
+  cardsExists: boolean = false;
   cards: Card[] = [];
   language: any;
   currentStack: Stack = {
@@ -117,7 +118,7 @@ export class StackDetailsPage implements OnInit {
 
     if(ev.detail.role === 'confirm'){
 
-      await this.deleteCardFromStorage(card.id);
+      await this.deleteCard(card);
       await this.loadCardsFromStorage(this.currentStack.id);
     }
   }
@@ -126,6 +127,7 @@ export class StackDetailsPage implements OnInit {
   async loadStacksFromStorage(stackId: number){
 
     const result = await this.leardsStorage.get("stacks");
+    console.log('loadStacks'+result)
     if(result){
       this.stacks = await JSON.parse(result);
       this.currentStack = this.stacks.find(stack => stack.id === stackId)!;
@@ -135,11 +137,12 @@ export class StackDetailsPage implements OnInit {
   async loadCardsFromStorage(stackId: number){
 
     const result = await this.leardsStorage.get("cards");
+    console.log('loadCards'+result)
     if(result){
       const allCards: Card[] = JSON.parse(result);
       this.cards =  allCards.filter(card => card.stack_id === stackId);
     }else{
-      this.cards = [];
+      alert('Load cards went wrong');
     }
   }
 
@@ -154,21 +157,21 @@ export class StackDetailsPage implements OnInit {
     }).id;
   }
 
-  async saveCard(card: Card){
+  async saveCreatedCard(card: Card){
 
     card.id = this.getHighestCardId() + 1;
     card.stack_id = this.currentStack.id;
     card.stack_name = this.currentStack.name
-    this.cards.push(card);
-    await this.saveCardsToStorage()
+    //this.cards.push(card);
+    await this.createCard(card)
     await this.loadCardsFromStorage(this.currentStack.id);
     this.closeCardFormModal()
   }
 
   // TODO: change Stack
-  async updateCard(card: Card){
+  async saveUpdatedCard(card: Card){
 
-    this.cards.map(cardToUpdate => {
+    /*this.cards.map(cardToUpdate => {
       if(cardToUpdate.id === card.id){
         cardToUpdate.front = card.front;
         cardToUpdate.back = card.back;
@@ -176,27 +179,69 @@ export class StackDetailsPage implements OnInit {
         //cardToUpdate.stack_id = this.currentStack.id;
         //cardToUpdate.stack_name = this.currentStack.name;
       }
-    });
+    });*/
 
-    alert(JSON.stringify(this.cards));
-    await this.saveCardsToStorage();
+
+    await this.updateCard(card);
     await this.loadCardsFromStorage(this.currentStack.id);
-    alert(JSON.stringify(this.cards));
     this.closeCardFormModal();
   }
 
-  async saveCardsToStorage(){
+  async createCard(card: Card){
 
-    await this.leardsStorage.set("cards", JSON.stringify(this.cards));
+    if(!this.cardsExists){
+      const cards: Card[] = [];
+      cards.push(card);
+      await this.leardsStorage.set('cards', JSON.stringify(cards));
+      this.cardsExists = true;
+    }else{
+      const result = await this.leardsStorage.get("cards");
+      if(result){
+        const cards: Card[] = JSON.parse(result);
+        cards.push(card);
+        console.log(JSON.stringify(cards));
+        await this.leardsStorage.set("cards", JSON.stringify(cards));
+      }else{
+        alert('Sorry, create card went wrong');
+      }
+    }
   }
 
-  async deleteCardFromStorage(cardId: number){
+  async updateCard(card: Card){
 
-    const cardsToSave: Card[] = this.cards.filter(card => card.id !== cardId);
-    await this.leardsStorage.set("cards", JSON.stringify(cardsToSave));
+    const result = await this.leardsStorage.get("cards");
+    if(result){
+      const cards: Card[] = JSON.parse(result);
+      cards.map(cardToUpdate => {
+        if(cardToUpdate.id === card.id){
+          cardToUpdate.front = card.front;
+          cardToUpdate.back = card.back;
+          cardToUpdate.learned = card.learned;
+          //cardToUpdate.stack_id = this.currentStack.id;
+          //cardToUpdate.stack_name = this.currentStack.name;
+        }
+      });
+      console.log(card);
+      console.log(cards);
+      await this.leardsStorage.set("cards", JSON.stringify(cards));
+    }else{
+      alert('Sorry, update card went wrong');
+    }
   }
 
-  learnStack(){
+  async deleteCard(card: Card){
+
+    const result = await this.leardsStorage.get("cards");
+    if(result){
+      const cards: Card[] = JSON.parse(result);
+      const cardsToSave: Card[] = cards.filter(cardToSave => cardToSave.id !== card.id);
+      await this.leardsStorage.set("cards", JSON.stringify(cardsToSave));
+    }else{
+      alert('Sorry, delete card went wrong');
+    }
+  }
+
+  navigateToStackLearn(){
 
     this.router.navigate(['/stack-learn', this.currentStack.id, this.stackLearnOptions.stack, this.stackLearnOptions.cards ])
   }
@@ -205,7 +250,16 @@ export class StackDetailsPage implements OnInit {
     try{
       let stackId = parseInt(this.activeRoute.snapshot.paramMap.get('id')!);
       await this.loadStacksFromStorage(stackId);
-      await this.loadCardsFromStorage(stackId);
+
+      let keys = await this.leardsStorage.keys();
+      let cards = keys.find(value => {
+        return value === 'cards';
+      });
+      if(cards){
+        await this.loadCardsFromStorage(stackId);
+        this.cardsExists = true;
+      }
+
     }catch(error){
       this.router.navigateByUrl('home');
     }
