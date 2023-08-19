@@ -187,6 +187,5 @@ export class HomePage {
   ngOnInit(): void {
 
     this.loadStacksFromStorage();
-    alert('dsfsd'+this.stacks);
   }
 }

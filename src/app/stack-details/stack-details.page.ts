@@ -30,6 +30,7 @@ export class StackDetailsPage implements OnInit {
     font_color: '',
   };
 
+  learnedCards: number = 0;
   toggleEditCheck: boolean = false;
   toggleDeleteCheck: boolean = false;
   formMode = 'create';
@@ -70,6 +71,11 @@ export class StackDetailsPage implements OnInit {
     private router: Router
   ) { }
 
+  /**
+   * Assings edit checkbox condition to edit property and switches delete property to false
+   *
+   * @param event - Checkbox Object
+   */
   toggleEditCard(event: any){
 
     if(event.detail.checked === true){
@@ -78,6 +84,11 @@ export class StackDetailsPage implements OnInit {
     this.toggleEditCheck = event.detail.checked;
   }
 
+  /**
+   * Assings delete checkbox condition to edit property and switches edit property to false
+   *
+   * @param event - Checkbox Object
+   */
   toggleDeleteCard(event: any){
 
     if(event.detail.checked === true){
@@ -86,27 +97,58 @@ export class StackDetailsPage implements OnInit {
     this.toggleDeleteCheck = event.detail.checked;
   }
 
-  toggleStackOptionsStackMixed(event: any){
+  /**
+   * Sets the order of the current stack in stack-learn page in ordered or mixed.
+   *
+   * @param event - Radio object
+   */
+  toggleStackLearnOptionsStack(event: any){
 
-    if(event.detail.checked === true){
-      this.stackLearnOptions.stack = 'mixed';
-    }else{
-      this.stackLearnOptions.stack = 'ordered';
-    }
+    this.stackLearnOptions.stack = event.detail.value;
   }
 
+  /**
+   * Sets how the cards will be shown in stack-learn page in front, back or mixed.
+   *
+   * @param event - Radio object
+   */
   toggleStackLearnOptionsCards(event: any){
 
     this.stackLearnOptions.cards = event.detail.value;
-
   }
 
+  /**
+   * Sets which cards will be shown. Learned or unskilled cards.
+   *
+   * @param event - Section object
+   */
+  async toggleLearnedAndUnskilled(event: any){
+
+    if(event.detail.value === 'learned'){
+      this.learnedCards = 1;
+      await this.loadCardsFromStorage(this.currentStack.id, this.learnedCards);
+    }
+
+    if(event.detail.value === 'unskilled'){
+      this.learnedCards = 0;
+      await this.loadCardsFromStorage(this.currentStack.id, this.learnedCards);
+    }
+  }
+
+  /**
+   * Closes form modal
+   */
   closeCardFormModal(){
 
     this.formMode = 'create';
     this.modal.dismiss(null, 'cancel');
   }
 
+  /**
+   * Opens form modal to edit card
+   *
+   * @param card - Card object
+   */
   openEditCardModal(card: Card){
 
     this.formMode = "edit";
@@ -114,16 +156,26 @@ export class StackDetailsPage implements OnInit {
     this.modal.present();
   }
 
-  async setDeleteResult(ev:any, card: Card) {
+  /**
+   * Deletes  certain card given by parameter
+   *
+   * @param event - Alert confirmation object
+   * @param card - Card object
+   */
+  async setDeleteResult(event:any, card: Card) {
 
-    if(ev.detail.role === 'confirm'){
+    if(event.detail.role === 'confirm'){
 
       await this.deleteCard(card);
-      await this.loadCardsFromStorage(this.currentStack.id);
+      await this.loadCardsFromStorage(this.currentStack.id, this.learnedCards);
     }
   }
 
-
+  /**
+   * Loads all and current stacks from storage and assigns to class objectes
+   *
+   * @param stackId - ID of current stack
+   */
   async loadStacksFromStorage(stackId: number){
 
     const result = await this.leardsStorage.get("stacks");
@@ -134,18 +186,29 @@ export class StackDetailsPage implements OnInit {
     }
   }
 
-  async loadCardsFromStorage(stackId: number){
+  /**
+   * Loads all and current stacks from storage and assigns to class objectes
+   *
+   * @param stackId - ID of current stack
+   */
+  async loadCardsFromStorage(stackId: number, learnedCards: number){
 
     const result = await this.leardsStorage.get("cards");
-    console.log('loadCards'+result)
     if(result){
       const allCards: Card[] = JSON.parse(result);
-      this.cards =  allCards.filter(card => card.stack_id === stackId);
+      console.log(learnedCards);
+      this.cards = allCards.filter(card => card.learned === learnedCards && card.stack_id === stackId);
+      console.log(this.cards);
     }else{
       alert('Load cards went wrong');
     }
   }
 
+  /**
+   * Returns highest number of card IDs
+   *
+   * @returns - number
+   */
   getHighestCardId(): number {
 
     if (this.cards.length === 0) {
@@ -157,6 +220,11 @@ export class StackDetailsPage implements OnInit {
     }).id;
   }
 
+  /**
+   * Creates new card object and saves to storage
+   *
+   * @param card - Card object
+   */
   async saveCreatedCard(card: Card){
 
     card.id = this.getHighestCardId() + 1;
@@ -164,10 +232,15 @@ export class StackDetailsPage implements OnInit {
     card.stack_name = this.currentStack.name
     //this.cards.push(card);
     await this.createCard(card)
-    await this.loadCardsFromStorage(this.currentStack.id);
+    await this.loadCardsFromStorage(this.currentStack.id, this.learnedCards);
     this.closeCardFormModal()
   }
 
+  /**
+   * Updates card object and saves to storage
+   *
+   * @param card - Card object
+   */
   // TODO: change Stack
   async saveUpdatedCard(card: Card){
 
@@ -183,10 +256,15 @@ export class StackDetailsPage implements OnInit {
 
 
     await this.updateCard(card);
-    await this.loadCardsFromStorage(this.currentStack.id);
+    await this.loadCardsFromStorage(this.currentStack.id, this.learnedCards);
     this.closeCardFormModal();
   }
 
+  /**
+   * Creates card object
+   *
+   * @param card - Card object
+   */
   async createCard(card: Card){
 
     if(!this.cardsExists){
@@ -199,7 +277,6 @@ export class StackDetailsPage implements OnInit {
       if(result){
         const cards: Card[] = JSON.parse(result);
         cards.push(card);
-        console.log(JSON.stringify(cards));
         await this.leardsStorage.set("cards", JSON.stringify(cards));
       }else{
         alert('Sorry, create card went wrong');
@@ -207,6 +284,11 @@ export class StackDetailsPage implements OnInit {
     }
   }
 
+  /**
+   * Updates card object
+   *
+   * @param card
+   */
   async updateCard(card: Card){
 
     const result = await this.leardsStorage.get("cards");
@@ -221,14 +303,17 @@ export class StackDetailsPage implements OnInit {
           //cardToUpdate.stack_name = this.currentStack.name;
         }
       });
-      console.log(card);
-      console.log(cards);
       await this.leardsStorage.set("cards", JSON.stringify(cards));
     }else{
       alert('Sorry, update card went wrong');
     }
   }
 
+  /**
+   * delets card object
+   *
+   * @param card
+   */
   async deleteCard(card: Card){
 
     const result = await this.leardsStorage.get("cards");
@@ -241,11 +326,17 @@ export class StackDetailsPage implements OnInit {
     }
   }
 
+  /**
+   * navigates to stack-learn page with stackID and options
+   */
   navigateToStackLearn(){
 
     this.router.navigate(['/stack-learn', this.currentStack.id, this.stackLearnOptions.stack, this.stackLearnOptions.cards ])
   }
 
+  /**
+   * Initializes stacks and cards by ID of stack
+   */
   async ngOnInit() {
     try{
       let stackId = parseInt(this.activeRoute.snapshot.paramMap.get('id')!);
@@ -256,7 +347,7 @@ export class StackDetailsPage implements OnInit {
         return value === 'cards';
       });
       if(cards){
-        await this.loadCardsFromStorage(stackId);
+        await this.loadCardsFromStorage(stackId, this.learnedCards);
         this.cardsExists = true;
       }
 
@@ -264,6 +355,5 @@ export class StackDetailsPage implements OnInit {
       this.router.navigateByUrl('home');
     }
   }
-
 }
 

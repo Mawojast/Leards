@@ -75,7 +75,14 @@ export class StackLearnPage implements OnInit {
     if(cardsOrder === 'mixed'){
       this.cards = this.cards.map(card => {
         if(Math.random() > 0.4){
-          return {id: card.id, front: card.back, back: card.front, stack_name: card.stack_name, stack_id: card.stack_id, learned: card.learned}
+          return {
+            id: card.id,
+            front: card.back,
+            back: card.front,
+            stack_name: card.stack_name,
+            stack_id: card.stack_id,
+            learned: card.learned
+          }
         }else{
           return {...card};
         }
@@ -83,25 +90,37 @@ export class StackLearnPage implements OnInit {
     }
   }
 
-  async setCardToLearned(card: Card){
+  async setCardToLearned(event: any, card: Card){
 
-    this.cards.map(cardToUpdate => {
-      if(cardToUpdate.id === card.id){
-        cardToUpdate.front = card.front;
-        cardToUpdate.back = card.back;
-        cardToUpdate.learned = 1;
-        //cardToUpdate.stack_id = this.currentStack.id;
-        //cardToUpdate.stack_name = this.currentStack.name;
-      }
-    });
+    this.swiperRef?.nativeElement.swiper.slideNext();
+    console.log(event);
+    card.learned = 1;
 
-    alert(JSON.stringify(this.cards));
-    await this.saveCardsToStorage();
+    const activeIndex = this.swiperRef?.nativeElement.swiper.activeIndex;
+    this.swiperRef?.nativeElement.swiper.slideNext();
+    this.cards.splice(activeIndex, 1);
+
+    this.updateCard(card);
   }
 
-  async saveCardsToStorage(){
+  async updateCard(card: Card){
 
-    await this.leardsStorage.set("cards", JSON.stringify(this.cards));
+    const result = await this.leardsStorage.get("cards");
+    if(result){
+      const cards: Card[] = JSON.parse(result);
+      cards.map(cardToUpdate => {
+        if(cardToUpdate.id === card.id){
+          cardToUpdate.front = card.front;
+          cardToUpdate.back = card.back;
+          cardToUpdate.learned = card.learned;
+        }
+      });
+      console.log(card);
+      console.log(cards);
+      await this.leardsStorage.set("cards", JSON.stringify(cards));
+    }else{
+      alert('Sorry, update card went wrong');
+    }
   }
 
   async ngOnInit() {
@@ -112,11 +131,7 @@ export class StackLearnPage implements OnInit {
 
     await this.loadCardsFromStorage(stackId);
     this.orderStack(stackOrder);
-    console.log(this.cards);
     this.orderCards(cardsOrder);
-    console.log(this.cards);
-
-
   }
 
 }

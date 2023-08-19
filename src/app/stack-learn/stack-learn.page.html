@@ -13,7 +13,7 @@
   <swiper-container #swiper (slidechange)="onSlideChange($event)" [loop]="false">
     <swiper-slide *ngFor="let card of cards; let i = index" [id]="card.id" style="border: 1px solid black;">
       <app-card-learn [card]="card"></app-card-learn>
-      <ion-button expand="block" (click)="setCardToLearned(card)">Learned</ion-button>
+      <ion-button expand="block" (click)="setCardToLearned($event, card)">Learned</ion-button>
     </swiper-slide>
     <swiper-slide>
       End
