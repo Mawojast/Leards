@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 import { Card } from '../interfaces/card';
 import { CardLearnPage } from './card-learn/card-learn.page';
@@ -16,21 +16,30 @@ register();
   templateUrl: './stack-learn.page.html',
   styleUrls: ['./stack-learn.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, CardLearnPage],
+  imports: [IonicModule, CommonModule, FormsModule, CardLearnPage, RouterLink],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class StackLearnPage implements OnInit {
 
   cards: Card[] = [];
+  learnedCards: number = 0;
+
+  activeIndex: number = 0;
 
   constructor(private activeRoute: ActivatedRoute, private leardsStorage: Storage) { }
 
-  async loadCardsFromStorage(stackId: number){
+  /**
+   * Loads cards by given parameters form storage and assigns to class objectes
+   *
+   * @param stackId - ID of current stack
+   * @param learnedCards - shows if cards are learned or unskilled
+   */
+  async loadCardsFromStorage(stackId: number, learnedCards: number){
 
     const result = await this.leardsStorage.get("cards");
     if(result){
       const allCards: Card[] = JSON.parse(result);
-      this.cards =  allCards.filter(card => card.stack_id === stackId && card.learned === 0);
+      this.cards =  allCards.filter(card => card.stack_id === stackId && card.learned === learnedCards);
     }else{
       this.cards = [];
     }
@@ -39,19 +48,26 @@ export class StackLearnPage implements OnInit {
   @ViewChild('swiper')
   swiperRef: ElementRef | undefined;
 
-  logActiveIndex() {
-    console.log(this.swiperRef?.nativeElement.swiper.activeIndex);
+  /**
+   * Captures the acitve slide index.
+   *
+   * @param event - Swiper object
+   */
+  onSlideChange(event: any ){
+
+    console.log(event.detail[0].activeIndex);
+    this.activeIndex = event.detail[0].activeIndex;
+
   }
 
-  onSlideChange(e: any ){
-    console.log(e);
-    console.log(this.swiperRef?.nativeElement.swiper);
+  /**
+   * Orders stack cards by setted option.
+   *
+   * @param order
+   */
+  orderCards(order: string){
 
-  }
-
-  orderStack(stackOrder: string){
-
-    if(stackOrder === 'mixed'){
+    if(order === 'mixed'){
       for (let i = this.cards.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
@@ -59,9 +75,14 @@ export class StackLearnPage implements OnInit {
     }
   }
 
-  orderCards(cardsOrder: string){
+  /**
+   * Sets which card site will be shown first.
+   *
+   * @param showFirst
+   */
+  showFirst(showFirst: string){
 
-    if(cardsOrder === 'back'){
+    if(showFirst === 'back'){
       this.cards = this.cards.map(card => ({
         id: card.id,
         front: card.back,
@@ -72,7 +93,7 @@ export class StackLearnPage implements OnInit {
       }));
     }
 
-    if(cardsOrder === 'mixed'){
+    if(showFirst === 'mixed'){
       this.cards = this.cards.map(card => {
         if(Math.random() > 0.4){
           return {
@@ -90,19 +111,35 @@ export class StackLearnPage implements OnInit {
     }
   }
 
-  async setCardToLearned(event: any, card: Card){
+  /**
+   * Sets card from unskilled to learned and saves it.
+   *
+   * @param card - Card object
+   */
+  async setCardToLearned(card: Card){
 
-    this.swiperRef?.nativeElement.swiper.slideNext();
-    console.log(event);
+    this.cards.splice(this.activeIndex, 1);
     card.learned = 1;
-
-    const activeIndex = this.swiperRef?.nativeElement.swiper.activeIndex;
-    this.swiperRef?.nativeElement.swiper.slideNext();
-    this.cards.splice(activeIndex, 1);
-
     this.updateCard(card);
   }
 
+  /**
+   * Sets card from learned to unskilled and saves it.
+   *
+   * @param card - Card object
+   */
+  async setCardToUnskilled(card: Card){
+
+    this.cards.splice(this.activeIndex, 1);
+    card.learned = 0;
+    this.updateCard(card);
+  }
+
+  /**
+   * Saves updated card in storage
+   *
+   * @param card - Card object
+   */
   async updateCard(card: Card){
 
     const result = await this.leardsStorage.get("cards");
@@ -115,23 +152,25 @@ export class StackLearnPage implements OnInit {
           cardToUpdate.learned = card.learned;
         }
       });
-      console.log(card);
-      console.log(cards);
       await this.leardsStorage.set("cards", JSON.stringify(cards));
     }else{
       alert('Sorry, update card went wrong');
     }
   }
 
+  /**
+   * Initializes parameter from active route and orders cards by given options
+   */
   async ngOnInit() {
 
     let stackId = parseInt(this.activeRoute.snapshot.paramMap.get('id')!);
-    let cardsOrder = this.activeRoute.snapshot.paramMap.get('cards-order')!;
-    let stackOrder = this.activeRoute.snapshot.paramMap.get('stack-order')!;
+    let showFirstOption = this.activeRoute.snapshot.paramMap.get('cards-order')!;
+    let cardsOrderOption = this.activeRoute.snapshot.paramMap.get('stack-order')!;
+    this.learnedCards = parseInt(this.activeRoute.snapshot.paramMap.get('learned')!);
 
-    await this.loadCardsFromStorage(stackId);
-    this.orderStack(stackOrder);
-    this.orderCards(cardsOrder);
+    await this.loadCardsFromStorage(stackId, this.learnedCards);
+    this.orderCards(cardsOrderOption);
+    this.showFirst(showFirstOption);
   }
 
 }

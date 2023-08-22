@@ -172,14 +172,13 @@ export class StackDetailsPage implements OnInit {
   }
 
   /**
-   * Loads all and current stacks from storage and assigns to class objectes
+   * Loads all stacks and current stack from storage and assigns to class objectes
    *
    * @param stackId - ID of current stack
    */
   async loadStacksFromStorage(stackId: number){
 
     const result = await this.leardsStorage.get("stacks");
-    console.log('loadStacks'+result)
     if(result){
       this.stacks = await JSON.parse(result);
       this.currentStack = this.stacks.find(stack => stack.id === stackId)!;
@@ -187,7 +186,7 @@ export class StackDetailsPage implements OnInit {
   }
 
   /**
-   * Loads all and current stacks from storage and assigns to class objectes
+   * Loads cards by given parameters from storage and assigns to class objectes
    *
    * @param stackId - ID of current stack
    */
@@ -196,9 +195,7 @@ export class StackDetailsPage implements OnInit {
     const result = await this.leardsStorage.get("cards");
     if(result){
       const allCards: Card[] = JSON.parse(result);
-      console.log(learnedCards);
       this.cards = allCards.filter(card => card.learned === learnedCards && card.stack_id === stackId);
-      console.log(this.cards);
     }else{
       alert('Load cards went wrong');
     }
@@ -243,17 +240,6 @@ export class StackDetailsPage implements OnInit {
    */
   // TODO: change Stack
   async saveUpdatedCard(card: Card){
-
-    /*this.cards.map(cardToUpdate => {
-      if(cardToUpdate.id === card.id){
-        cardToUpdate.front = card.front;
-        cardToUpdate.back = card.back;
-        cardToUpdate.learned = card.learned;
-        //cardToUpdate.stack_id = this.currentStack.id;
-        //cardToUpdate.stack_name = this.currentStack.name;
-      }
-    });*/
-
 
     await this.updateCard(card);
     await this.loadCardsFromStorage(this.currentStack.id, this.learnedCards);
@@ -331,7 +317,7 @@ export class StackDetailsPage implements OnInit {
    */
   navigateToStackLearn(){
 
-    this.router.navigate(['/stack-learn', this.currentStack.id, this.stackLearnOptions.stack, this.stackLearnOptions.cards ])
+    this.router.navigate(['/stack-learn', this.currentStack.id, this.stackLearnOptions.stack, this.stackLearnOptions.cards, this.learnedCards ])
   }
 
   /**

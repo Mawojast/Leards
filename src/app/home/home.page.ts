@@ -143,7 +143,6 @@ export class HomePage {
     this.stacks.push(stack);
     await this.saveStacksToStorage();
     await this.loadStacksFromStorage();
-    alert('saveStack++++++'+JSON.stringify(this.stacks));
     this.closeStackFormModal();
   }
 
@@ -156,7 +155,6 @@ export class HomePage {
     if(result !== null){
       this.stacks = JSON.parse(result);
     }
-    console.log('stacks: '+ this.stacks);
     //this.stacks = JSON.parse(result);
 
   }

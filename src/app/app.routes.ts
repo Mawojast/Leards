@@ -27,7 +27,7 @@ export const routes: Routes = [
     loadComponent: () => import('./stack-details/card-update-form/card-update-form.page').then( m => m.CardUpdateFormPage)
   },
   {
-    path: 'stack-learn/:id/:stack-order/:cards-order',
+    path: 'stack-learn/:id/:stack-order/:cards-order/:learned',
     loadComponent: () => import('./stack-learn/stack-learn.page').then( m => m.StackLearnPage)
   },
 ];
