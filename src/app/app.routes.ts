@@ -19,15 +19,7 @@ export const routes: Routes = [
     loadComponent: () => import('./stack-details/stack-details.page').then( m => m.StackDetailsPage)
   },
   {
-    path: 'card-create-form',
-    loadComponent: () => import('./stack-details/card-create-form/card-create-form.page').then( m => m.CardCreateFormPage)
-  },
-  {
-    path: 'card-update-form',
-    loadComponent: () => import('./stack-details/card-update-form/card-update-form.page').then( m => m.CardUpdateFormPage)
-  },
-  {
-    path: 'stack-learn/:id/:stack-order/:cards-order/:learned',
+    path: 'stack-learn/:id/:learned',
     loadComponent: () => import('./stack-learn/stack-learn.page').then( m => m.StackLearnPage)
   },
 ];

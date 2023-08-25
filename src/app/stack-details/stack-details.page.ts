@@ -28,6 +28,10 @@ export class StackDetailsPage implements OnInit {
     name: '',
     background_color: '',
     font_color: '',
+    cards: {
+      order: 'ordered',
+      show_first: 'front',
+    },
   };
 
   learnedCards: number = 0;
@@ -102,9 +106,17 @@ export class StackDetailsPage implements OnInit {
    *
    * @param event - Radio object
    */
-  toggleStackLearnOptionsStack(event: any){
+  async toggleStackLearnOptionsOrder(event: any){
 
     this.stackLearnOptions.stack = event.detail.value;
+    this.currentStack.cards.order = event.detail.value;
+    this.stacks.map(stackToUpdate => {
+      if(stackToUpdate.id === this.currentStack.id){
+        stackToUpdate.cards.order = this.currentStack.cards.order;
+      }
+    });
+    await this.saveStacksToStorage()
+    console.log(this.stacks);
   }
 
   /**
@@ -112,9 +124,25 @@ export class StackDetailsPage implements OnInit {
    *
    * @param event - Radio object
    */
-  toggleStackLearnOptionsCards(event: any){
+  async toggleStackLearnOptionsShowFirst(event: any){
 
-    this.stackLearnOptions.cards = event.detail.value;
+    this.stackLearnOptions.cards = event.detail.value;//delete
+    this.currentStack.cards.show_first = event.detail.value;
+    this.stacks.map(stackToUpdate => {
+      if(stackToUpdate.id === this.currentStack.id){
+        stackToUpdate.cards.show_first = this.currentStack.cards.show_first;
+      }
+    });
+
+    await this.saveStacksToStorage()
+  }
+
+  /**
+   * Sets stacks property to Storage with key stacks.
+   */
+  async saveStacksToStorage(){
+
+    await this.leardsStorage.set("stacks", JSON.stringify(this.stacks));
   }
 
   /**
@@ -317,7 +345,7 @@ export class StackDetailsPage implements OnInit {
    */
   navigateToStackLearn(){
 
-    this.router.navigate(['/stack-learn', this.currentStack.id, this.stackLearnOptions.stack, this.stackLearnOptions.cards, this.learnedCards ])
+    this.router.navigate(['/stack-learn', this.currentStack.id, this.learnedCards ])
   }
 
   /**

@@ -68,7 +68,6 @@ export class HomePage {
 
     if(ev.detail.role === 'confirm'){
       this.stacks = this.stacks.filter(stack => stack.id !== stackId);
-      alert(JSON.stringify(this.stacks));
       await this.saveStacksToStorage();
       await this.loadStacksFromStorage();
     }
@@ -114,8 +113,7 @@ export class HomePage {
    * @returns Number of highest Stack ID
    */
   getHighestStackId(): number {
-    alert("iD: " + JSON.stringify(this.stacks))
-    console.log(this.stacks.length);
+
     if (this.stacks.length === 0) {
       return 0;
     }

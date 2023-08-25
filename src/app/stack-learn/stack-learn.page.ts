@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 import { Card } from '../interfaces/card';
+import { Stack } from '../interfaces/stack';
 import { CardLearnPage } from './card-learn/card-learn.page';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { register } from 'swiper/element/bundle';
@@ -21,12 +22,27 @@ register();
 })
 export class StackLearnPage implements OnInit {
 
-  cards: Card[] = [];
-  learnedCards: number = 0;
+  cards: Card[];
+  stack: Stack;
 
+  learnedCards: number = 0;
   activeIndex: number = 0;
 
   constructor(private activeRoute: ActivatedRoute, private leardsStorage: Storage) { }
+
+  /**
+   * Loads all stacks and current stack from storage and assigns to class objectes
+   *
+   * @param stackId - ID of current stack
+   */
+  async loadStackFromStorage(stackId: number){
+
+    const result = await this.leardsStorage.get("stacks");
+    if(result){
+      let stacks = await JSON.parse(result);
+      this.stack = stacks.find((stack: { id: number; }) => stack.id === stackId)!;
+    }
+  }
 
   /**
    * Loads cards by given parameters form storage and assigns to class objectes
@@ -164,13 +180,12 @@ export class StackLearnPage implements OnInit {
   async ngOnInit() {
 
     let stackId = parseInt(this.activeRoute.snapshot.paramMap.get('id')!);
-    let showFirstOption = this.activeRoute.snapshot.paramMap.get('cards-order')!;
-    let cardsOrderOption = this.activeRoute.snapshot.paramMap.get('stack-order')!;
+    this.loadStackFromStorage(stackId);
     this.learnedCards = parseInt(this.activeRoute.snapshot.paramMap.get('learned')!);
 
     await this.loadCardsFromStorage(stackId, this.learnedCards);
-    this.orderCards(cardsOrderOption);
-    this.showFirst(showFirstOption);
+    this.orderCards(this.stack.cards.order);
+    this.showFirst(this.stack.cards.show_first);
   }
 
 }

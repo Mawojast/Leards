@@ -38,9 +38,9 @@ export class StackFormPage implements OnInit {
     const formValue = this.form.getRawValue();
 
     if(!this.editStack){
-      this.editStack = {...formValue, id: 0};
+      this.editStack = {...formValue, id: 0, cards: {order: 'ordered', show_first: 'front'}};
     }else{
-      this.editStack = {...formValue, id: this.editStack.id};
+      this.editStack = {...formValue, id: this.editStack.id, cards: {order: this.editStack.cards.order, show_first: this.editStack.cards.show_first}};
     }
 
     this.submitStack.emit(this.editStack);

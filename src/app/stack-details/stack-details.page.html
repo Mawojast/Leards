@@ -33,6 +33,31 @@
   </ion-modal>
 
   <hr style="border-top: solid 1px lightgray;">
+  <ion-row>
+    <ion-accordion-group class="option-accordion" *ngIf="cards.length > 0">
+      <ion-accordion value="first">
+        <ion-item slot="header" color="light">
+          <ion-label>Options</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <strong>Order Cards:</strong>
+          <ion-radio-group (ionChange)="toggleStackLearnOptionsOrder($event)" value="{{currentStack.cards.order}}" class="ion-padding">
+            <ion-label>Ordered</ion-label><ion-radio value="ordered" aria-label="front"></ion-radio>
+            <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
+          </ion-radio-group>
+        </div>
+        <div class="ion-padding" slot="content">
+          <strong>Show first: </strong>
+          <ion-radio-group (ionChange)="toggleStackLearnOptionsShowFirst($event)" value="{{currentStack.cards.show_first}}" class="ion-padding">
+            <ion-label>Front</ion-label><ion-radio value="front" aria-label="front"></ion-radio>
+            <ion-label>Back</ion-label><ion-radio value="back" aria-label="back"></ion-radio>
+            <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
+          </ion-radio-group>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+    <ion-button expand="block" *ngIf="cards.length > 0" class="learn-button" (click)="navigateToStackLearn()"><ion-icon name="caret-forward-outline"></ion-icon></ion-button>
+  </ion-row>
   <ion-segment value="unskilled" (ionChange)="toggleLearnedAndUnskilled($event)">
     <ion-segment-button value='unskilled'>
       <ion-label>Unskilled</ion-label>
@@ -42,31 +67,7 @@
     </ion-segment-button>
   </ion-segment>
   <ion-grid id="stackLearnOptionsBox" *ngIf="cards.length > 0">
-    <ion-row>
-      <h3>Options</h3>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <strong>Order Cards:</strong>
-        <ion-radio-group (ionChange)="toggleStackLearnOptionsStack($event)" value="ordered" class="ion-padding">
-          <ion-label>Ordered</ion-label><ion-radio value="ordered" aria-label="front"></ion-radio>
-          <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
-        </ion-radio-group>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <strong>Show first: </strong>
-        <ion-radio-group (ionChange)="toggleStackLearnOptionsCards($event)" value="front" class="ion-padding">
-          <ion-label>Front</ion-label><ion-radio value="front" aria-label="front"></ion-radio>
-          <ion-label>Back</ion-label><ion-radio value="back" aria-label="back"></ion-radio>
-          <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
-        </ion-radio-group>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-button expand="block" *ngIf="cards.length > 0" class="ion-float-right" (click)="navigateToStackLearn()"><ion-icon name="caret-forward-outline"></ion-icon></ion-button>
-    </ion-row>
+
 
 
 

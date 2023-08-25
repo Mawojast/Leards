@@ -1,4 +1,4 @@
-#Tue Aug 22 10:48:45 CEST 2023
+#Fri Aug 25 11:53:53 CEST 2023
 base.0=C\:\\Users\\Steffen\\Documents\\leardsPreferences2\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\Steffen\\Documents\\leardsPreferences2\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\14\\classes.dex
 base.2=C\:\\Users\\Steffen\\Documents\\leardsPreferences2\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\2\\classes.dex

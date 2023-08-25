@@ -3,4 +3,8 @@ export interface Stack {
   name: string;
   background_color: string;
   font_color: string;
+  cards: {
+    order: string;
+    show_first: string;
+  }
 }
