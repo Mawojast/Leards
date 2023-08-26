@@ -24,9 +24,11 @@ export class StackLearnPage implements OnInit {
 
   cards: Card[];
   stack: Stack;
+  stackLength: number = 0;
 
-  learnedCards: number = 0;
+  learnedStack: number = 0;
   activeIndex: number = 0;
+  cardsSettedToLearnedOrUnskilledStack: Card[] = [];
 
   constructor(private activeRoute: ActivatedRoute, private leardsStorage: Storage) { }
 
@@ -132,10 +134,12 @@ export class StackLearnPage implements OnInit {
    *
    * @param card - Card object
    */
-  async setCardToLearned(card: Card){
+  setCardToLearned(card: Card){
 
+    this.cardsSettedToLearnedOrUnskilledStack.push(card);
     this.cards.splice(this.activeIndex, 1);
     card.learned = 1;
+
     this.updateCard(card);
   }
 
@@ -144,10 +148,12 @@ export class StackLearnPage implements OnInit {
    *
    * @param card - Card object
    */
-  async setCardToUnskilled(card: Card){
+  setCardToUnskilled(card: Card){
 
+    this.cardsSettedToLearnedOrUnskilledStack.push(card);
     this.cards.splice(this.activeIndex, 1);
     card.learned = 0;
+
     this.updateCard(card);
   }
 
@@ -163,11 +169,10 @@ export class StackLearnPage implements OnInit {
       const cards: Card[] = JSON.parse(result);
       cards.map(cardToUpdate => {
         if(cardToUpdate.id === card.id){
-          cardToUpdate.front = card.front;
-          cardToUpdate.back = card.back;
           cardToUpdate.learned = card.learned;
         }
       });
+      console.log(cards);
       await this.leardsStorage.set("cards", JSON.stringify(cards));
     }else{
       alert('Sorry, update card went wrong');
@@ -181,9 +186,10 @@ export class StackLearnPage implements OnInit {
 
     let stackId = parseInt(this.activeRoute.snapshot.paramMap.get('id')!);
     this.loadStackFromStorage(stackId);
-    this.learnedCards = parseInt(this.activeRoute.snapshot.paramMap.get('learned')!);
+    this.learnedStack = parseInt(this.activeRoute.snapshot.paramMap.get('learned')!);
 
-    await this.loadCardsFromStorage(stackId, this.learnedCards);
+    await this.loadCardsFromStorage(stackId, this.learnedStack);
+    this.stackLength = this.cards.length;
     this.orderCards(this.stack.cards.order);
     this.showFirst(this.stack.cards.show_first);
   }

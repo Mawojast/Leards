@@ -13,11 +13,25 @@
   <swiper-container #swiper (slidechange)="onSlideChange($event)" [loop]="false">
     <swiper-slide *ngFor="let card of cards; let i = index" [id]="card.id" style="border: 1px solid black;">
       <app-card-learn [card]="card"></app-card-learn>
-      <ion-button class="changeLearnedBtn" *ngIf="learnedCards === 0" expand="block" (click)="setCardToLearned(card)">Learned</ion-button>
-      <ion-button class="changeLearnedBtn" *ngIf="learnedCards === 1" expand="block" (click)="setCardToUnskilled(card)">Back to unskilled</ion-button>
+      <ion-button class="changeLearnedBtn" *ngIf="learnedStack === 0" expand="block" (click)="setCardToLearned(card)">Learned</ion-button>
+      <ion-button class="changeLearnedBtn" *ngIf="learnedStack === 1" expand="block" (click)="setCardToUnskilled(card)">Back to unskilled</ion-button>
     </swiper-slide>
     <swiper-slide>
-      End
+      <ion-list>
+        <ion-grid>
+        <ion-row *ngFor="let card of cardsSettedToLearnedOrUnskilledStack; let i = index">
+          <ion-col size="12">
+            <div class='card-container'>
+
+              <div #frontCard class="ion-padding ion-text-center card-front">
+                <ion-label class="ion-text-center">{{card.front}}</ion-label>
+              </div>
+
+            </div>
+          </ion-col>
+        </ion-row>
+        </ion-grid>
+      </ion-list>
     </swiper-slide>
   </swiper-container>
 </ion-content>
