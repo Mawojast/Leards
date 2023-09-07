@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 import { Card } from '../interfaces/card';
 import { Stack } from '../interfaces/stack';
@@ -27,10 +27,16 @@ export class StackLearnPage implements OnInit {
   stackLength: number = 0;
 
   learnedStack: number = 0;
-  activeIndex: number = 0;
+  currentCardNumber: number = 1;
   cardsSettedToLearnedOrUnskilledStack: Card[] = [];
 
-  constructor(private activeRoute: ActivatedRoute, private leardsStorage: Storage) { }
+  @ViewChild('swiper')
+  swiperRef: ElementRef | undefined;
+
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private leardsStorage: Storage,
+    private router: Router) { }
 
   /**
    * Loads all stacks and current stack from storage and assigns to class objectes
@@ -63,9 +69,6 @@ export class StackLearnPage implements OnInit {
     }
   }
 
-  @ViewChild('swiper')
-  swiperRef: ElementRef | undefined;
-
   /**
    * Captures the acitve slide index.
    *
@@ -74,7 +77,8 @@ export class StackLearnPage implements OnInit {
   onSlideChange(event: any ){
 
     console.log(event.detail[0].activeIndex);
-    this.activeIndex = event.detail[0].activeIndex;
+    console.log(event);
+    this.currentCardNumber = event.detail[0].activeIndex + 1;
 
   }
 
@@ -133,11 +137,13 @@ export class StackLearnPage implements OnInit {
    * Sets card from unskilled to learned and saves it.
    *
    * @param card - Card object
+   * @param event - Button object
    */
-  setCardToLearned(card: Card){
-
+  setCardToLearned(event: any, card: Card){
+    console.log(event);
+    event.srcElement.disabled = true;
     this.cardsSettedToLearnedOrUnskilledStack.push(card);
-    this.cards.splice(this.activeIndex, 1);
+    // this.cards.splice(this.activeIndex, 1);
     card.learned = 1;
 
     this.updateCard(card);
@@ -147,11 +153,13 @@ export class StackLearnPage implements OnInit {
    * Sets card from learned to unskilled and saves it.
    *
    * @param card - Card object
+   * @param event - Button object
    */
-  setCardToUnskilled(card: Card){
+  setCardToUnskilled(event: any, card: Card){
 
+    event.srcElement.disabled = true;
     this.cardsSettedToLearnedOrUnskilledStack.push(card);
-    this.cards.splice(this.activeIndex, 1);
+    //this.cards.splice(this.activeIndex, 1);
     card.learned = 0;
 
     this.updateCard(card);
@@ -177,6 +185,14 @@ export class StackLearnPage implements OnInit {
     }else{
       alert('Sorry, update card went wrong');
     }
+  }
+
+  /**
+   * navigates to stack-details page with stackID
+   */
+  navigateToStackDetailsPage(){
+
+    this.router.navigate(['/stack-details', this.stack.id ], {replaceUrl: true})
   }
 
   /**

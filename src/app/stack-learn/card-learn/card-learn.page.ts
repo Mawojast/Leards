@@ -11,10 +11,12 @@ import { Card } from 'src/app/interfaces/card';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class CardLearnPage {
+export class CardLearnPage implements AfterViewInit{
 
   @Input() card: Card;
   isFlipped: boolean = false;
+  @ViewChild('frontCard') frontCard: any;
+  @ViewChild('backCard') backCard: any;
 
   constructor() { }
 
@@ -22,4 +24,28 @@ export class CardLearnPage {
     this.isFlipped = !this.isFlipped;
   }
 
+  isTextOver128(text: string){
+    return text.length > 128;
+  }
+
+  ngAfterViewInit() {
+    this.updateFontSize();
+  }
+
+  updateFontSize() {
+    const frontCardText = this.frontCard.nativeElement.textContent;
+    const backCardText = this.backCard.nativeElement.textContent;
+
+    if(this.isTextOver128(frontCardText)) {
+      this.frontCard.nativeElement.style.fontSize = '2rem';
+    }else{
+      this.frontCard.nativeElement.style.fontSize = '3rem';
+    }
+
+    if(this.isTextOver128(backCardText)) {
+      this.backCard.nativeElement.style.fontSize = '2rem';
+    }else{
+      this.backCard.nativeElement.style.fontSize = '3rem';
+    }
+  }
 }

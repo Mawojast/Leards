@@ -18,11 +18,15 @@ export class CardCreateFormPage{
   form = new FormGroup({
     front: new FormControl('',{
       nonNullable: true,
-      validators: [Validators.required]
+      validators: [
+        Validators.required,
+        Validators.maxLength(256)]
     }),
     back: new FormControl('',{
       nonNullable: true,
-      validators: [Validators.required]
+      validators:[
+        Validators.required,
+        Validators.maxLength(256)]
     }),
   });
 

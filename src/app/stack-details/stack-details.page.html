@@ -1,13 +1,3 @@
-
-<!-- <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Stack - {{currentStack.name}}
-    </ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
-
 <ion-content [fullscreen]="true">
 
   <ion-menu side="end" contentId="main-content">
@@ -17,31 +7,61 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
+      <ion-grid>
+        <ion-row>
+          <ion-col><strong>Order Cards:</strong></ion-col>
+        </ion-row>
+        <ion-radio-group (ionChange)="toggleStackLearnOptionsOrder($event)" value="{{currentStack.cards.order}}" class="ion-padding">
+          <ion-row>
+            <ion-col><ion-label>Ordered</ion-label></ion-col>
+            <ion-col><ion-radio value="ordered" aria-label="front"></ion-radio></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col><ion-label>Mixed</ion-label></ion-col>
+            <ion-col><ion-radio value="mixed" aria-label="mixed"></ion-radio></ion-col>
+          </ion-row>
+        </ion-radio-group>
 
-          <strong>Order Cards:</strong>
-          <ion-radio-group (ionChange)="toggleStackLearnOptionsOrder($event)" value="{{currentStack.cards.order}}" class="ion-padding">
-            <ion-label>Ordered</ion-label><ion-radio value="ordered" aria-label="front"></ion-radio>
-            <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
-          </ion-radio-group>
-
-          <strong>Show first: </strong>
-          <ion-radio-group (ionChange)="toggleStackLearnOptionsShowFirst($event)" value="{{currentStack.cards.show_first}}" class="ion-padding">
-            <ion-label>Front</ion-label><ion-radio value="front" aria-label="front"></ion-radio>
-            <ion-label>Back</ion-label><ion-radio value="back" aria-label="back"></ion-radio>
-            <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
-          </ion-radio-group>
-
+        <ion-row>
+          <strong>Show first:</strong>
+        </ion-row>
+        <ion-radio-group (ionChange)="toggleStackLearnOptionsShowFirst($event)" value="{{currentStack.cards.show_first}}" class="ion-padding">
+          <ion-row>
+            <ion-col><ion-label>Front</ion-label></ion-col>
+            <ion-col><ion-radio value="front" aria-label="front"></ion-radio></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col><ion-label>Back</ion-label></ion-col>
+            <ion-col><ion-radio value="back" aria-label="back"></ion-radio></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col><ion-label>Mixed</ion-label></ion-col>
+            <ion-col><ion-radio value="mixed" aria-label="mixed"></ion-radio></ion-col>
+          </ion-row>
+        </ion-radio-group>
+      </ion-grid>
     </ion-content>
   </ion-menu>
   <div class="ion-page" id="main-content">
     <ion-header>
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="navigateToHomePage()"><ion-icon name="arrow-back"></ion-icon></ion-button>
+        </ion-buttons>
         <ion-title>{{currentStack.name}}</ion-title>
         <ion-buttons slot="end">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
+    <ion-segment value="unskilled" (ionChange)="toggleLearnedAndUnskilled($event)">
+      <ion-segment-button value='unskilled'>
+        <ion-label>Unskilled</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value='learned'>
+        <ion-label>Learned</ion-label>
+      </ion-segment-button>
+    </ion-segment>
     <ion-content class="ion-padding">
       <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleEditCheck" (ionChange)="toggleEditCard($event)" class="ion-padding">Edit</ion-checkbox>
   <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleDeleteCheck" (ionChange)="toggleDeleteCard($event)" class="ion-padding" >Delete</ion-checkbox>
@@ -65,20 +85,17 @@
 
   <hr style="border-top: solid 1px lightgray;">
 
-  <ion-segment value="unskilled" (ionChange)="toggleLearnedAndUnskilled($event)">
+  <!-- <ion-segment value="unskilled" (ionChange)="toggleLearnedAndUnskilled($event)">
     <ion-segment-button value='unskilled'>
       <ion-label>Unskilled</ion-label>
     </ion-segment-button>
     <ion-segment-button value='learned'>
       <ion-label>Learned</ion-label>
     </ion-segment-button>
-  </ion-segment>
-  <ion-button expand="block" *ngIf="cards.length > 0" class="learn-button" (click)="navigateToStackLearn()"><ion-icon name="caret-forward-outline"></ion-icon></ion-button>
+  </ion-segment> -->
+  <ion-button expand="block" *ngIf="cards.length > 0" class="learn-button" (click)="navigateToStackLearnPage()"><ion-icon name="caret-forward-outline"></ion-icon></ion-button>
 
   <ion-grid id="stackLearnOptionsBox" *ngIf="cards.length > 0">
-
-
-
 
 
   <ion-list>

@@ -2,8 +2,10 @@
 
   transition: transform 0.5s;
   transform-style: preserve-3d;
-  height: 80vh;
-  border: 1px solid red;
+  height: 75vh;
+  display: grid;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-container.flipped {
@@ -20,3 +22,5 @@
 .card-back {
   transform: rotateY(180deg);
 }
+
+

@@ -341,11 +341,19 @@ export class StackDetailsPage implements OnInit {
   }
 
   /**
+   * navigates to home page
+   */
+  navigateToHomePage(){
+
+    this.router.navigate(['/home'])
+  }
+
+  /**
    * navigates to stack-learn page with stackID and options
    */
-  navigateToStackLearn(){
+  navigateToStackLearnPage(){
 
-    this.router.navigate(['/stack-learn', this.currentStack.id, this.learnedCards ])
+    this.router.navigate(['/stack-learn', this.currentStack.id, this.learnedCards], {replaceUrl: true})
   }
 
   /**
@@ -364,10 +372,8 @@ export class StackDetailsPage implements OnInit {
         await this.loadCardsFromStorage(stackId, this.learnedCards);
         this.cardsExists = true;
       }
-
     }catch(error){
       this.router.navigateByUrl('home');
     }
   }
 }
-
