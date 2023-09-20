@@ -1,9 +1,8 @@
 <form [formGroup]="form" (ngSubmit)="submitForm()">
-  <ion-label for="front">Front</ion-label>
-  <ion-input id="front" formControlName="front"></ion-input>
 
-  <ion-label for="back">Back</ion-label>
-  <ion-input id="back" formControlName="back"></ion-input>
-
+  <ion-input type="text" fill="solid" label="Vorne" labelPlacement="floating" ngModel id="front" formControlName="front"></ion-input>
+  <br>
+  <ion-input type="text" fill="solid" label="Hinten" labelPlacement="floating" ngModel id="back" formControlName="back"></ion-input>
+  <br>
   <ion-button type="submit" [disabled]="form.invalid">Save</ion-button>
 </form>

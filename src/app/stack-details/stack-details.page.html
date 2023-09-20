@@ -1,223 +1,118 @@
 <ion-content [fullscreen]="true">
 
-  <ion-menu side="end" contentId="main-content">
+  <ion-menu side="end" contentId="main-content" [ngStyle]="{'--ion-background-color': currentStack.background_color}">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Stack Options</ion-title>
+        <ion-title [ngStyle]="{color: currentStack.font_color}">Optionen</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-grid>
+      <ion-grid [ngStyle]="{color: currentStack.font_color}">
         <ion-row>
-          <ion-col><strong>Order Cards:</strong></ion-col>
+          <ion-col><strong class="optionSectionTitle">Reihenfolge:</strong></ion-col>
         </ion-row>
         <ion-radio-group (ionChange)="toggleStackLearnOptionsOrder($event)" value="{{currentStack.cards.order}}" class="ion-padding">
           <ion-row>
-            <ion-col><ion-label>Ordered</ion-label></ion-col>
-            <ion-col><ion-radio value="ordered" aria-label="front"></ion-radio></ion-col>
+            <ion-col><ion-label class="optionTitle">Geordnet</ion-label></ion-col>
+            <ion-col><ion-radio value="ordered" aria-label="front" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><ion-label>Mixed</ion-label></ion-col>
-            <ion-col><ion-radio value="mixed" aria-label="mixed"></ion-radio></ion-col>
+            <ion-col><ion-label class="optionTitle">Gemischt</ion-label></ion-col>
+            <ion-col><ion-radio value="mixed" aria-label="mixed" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
         </ion-radio-group>
 
         <ion-row>
-          <strong>Show first:</strong>
+          <strong class="optionSectionTitle">Zuerst Anzeigen:</strong>
         </ion-row>
         <ion-radio-group (ionChange)="toggleStackLearnOptionsShowFirst($event)" value="{{currentStack.cards.show_first}}" class="ion-padding">
           <ion-row>
-            <ion-col><ion-label>Front</ion-label></ion-col>
-            <ion-col><ion-radio value="front" aria-label="front"></ion-radio></ion-col>
+            <ion-col><ion-label class="optionTitle">Vorne</ion-label></ion-col>
+            <ion-col><ion-radio value="front" aria-label="front" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><ion-label>Back</ion-label></ion-col>
-            <ion-col><ion-radio value="back" aria-label="back"></ion-radio></ion-col>
+            <ion-col><ion-label class="optionTitle">Hinten</ion-label></ion-col>
+            <ion-col><ion-radio value="back" aria-label="back" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><ion-label>Mixed</ion-label></ion-col>
-            <ion-col><ion-radio value="mixed" aria-label="mixed"></ion-radio></ion-col>
+            <ion-col><ion-label class="optionTitle">Gemischt</ion-label></ion-col>
+            <ion-col><ion-radio value="mixed" aria-label="mixed" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
         </ion-radio-group>
       </ion-grid>
     </ion-content>
   </ion-menu>
   <div class="ion-page" id="main-content">
-    <ion-header>
+    <ion-header [ngStyle]="{'--ion-background-color': currentStack.background_color}">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="navigateToHomePage()"><ion-icon name="arrow-back"></ion-icon></ion-button>
+          <ion-button (click)="navigateToHomePage()"><ion-icon [ngStyle]="{color: currentStack.font_color}" name="arrow-back"></ion-icon></ion-button>
         </ion-buttons>
-        <ion-title>{{currentStack.name}}</ion-title>
+        <ion-title [ngStyle]="{color: currentStack.font_color}">{{currentStack.name}}</ion-title>
         <ion-buttons slot="end">
-          <ion-menu-button></ion-menu-button>
+          <ion-menu-button [ngStyle]="{color: currentStack.font_color}"></ion-menu-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-segment value="unskilled" (ionChange)="toggleLearnedAndUnskilled($event)">
       <ion-segment-button value='unskilled'>
-        <ion-label>Unskilled</ion-label>
+        <ion-label class="section">Ungelernt</ion-label>
       </ion-segment-button>
       <ion-segment-button value='learned'>
-        <ion-label>Learned</ion-label>
+        <ion-label class="section">Gelernt</ion-label>
       </ion-segment-button>
     </ion-segment>
     <ion-content class="ion-padding">
-      <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleEditCheck" (ionChange)="toggleEditCard($event)" class="ion-padding">Edit</ion-checkbox>
-  <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleDeleteCheck" (ionChange)="toggleDeleteCard($event)" class="ion-padding" >Delete</ion-checkbox>
+      <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleEditCheck" (ionChange)="toggleEditCard($event)" class="ion-padding editCheckBox">Bearbeiten</ion-checkbox>
+      <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleDeleteCheck" (ionChange)="toggleDeleteCard($event)" class="ion-padding editCheckBox">Löschen</ion-checkbox>
+      <ion-button class="ion-float-right" id="open-card-form-modal" (click)="formMode = 'create'"><ion-icon name="add"></ion-icon></ion-button>
+      <ion-modal trigger="open-card-form-modal">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button (click)="closeCardFormModal()">Cancel</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <app-card-create-form *ngIf="formMode === 'create'" (submitStack)="saveCreatedCard($event)"></app-card-create-form>
+            <app-card-update-form *ngIf="formMode === 'edit'" (submitCard)="saveUpdatedCard($event)" [editCard]="editCard" [stacks]="stacks"></app-card-update-form>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      <ion-button size="large" expand="block" *ngIf="cards.length > 0" class="learn-button" (click)="navigateToStackLearnPage()"><ion-icon name="caret-forward-outline"></ion-icon></ion-button>
+      <ion-grid id="stackLearnOptionsBox" *ngIf="cards.length > 0">
+        <ion-list>
+          <ion-grid *ngIf="cards.length > 0">
+            <ion-row *ngFor="let card of cards; let i = index">
+              <ion-col size="12" *ngIf="!toggleDeleteCheck && !toggleEditCheck">
+                <div class='card-container'>
 
-  <ion-button class="ion-float-right" id="open-card-form-modal" (click)="formMode = 'create'"><ion-icon name="add"></ion-icon></ion-button>
-  <ion-modal trigger="open-card-form-modal">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button (click)="closeCardFormModal()">Cancel</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <app-card-create-form *ngIf="formMode === 'create'" (submitStack)="saveCreatedCard($event)"></app-card-create-form>
-        <app-card-update-form *ngIf="formMode === 'edit'" (submitCard)="saveUpdatedCard($event)" [editCard]="editCard" [stacks]="stacks"></app-card-update-form>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+                  <div #frontCard class="ion-padding ion-text-center card-front">
+                    <ion-label class="ion-text-center">{{card.front}}</ion-label>
+                  </div>
 
-  <hr style="border-top: solid 1px lightgray;">
+                </div>
+              </ion-col>
+              <ion-col size="11" *ngIf="toggleDeleteCheck || toggleEditCheck">
+                <div class='card-container'>
 
-  <!-- <ion-segment value="unskilled" (ionChange)="toggleLearnedAndUnskilled($event)">
-    <ion-segment-button value='unskilled'>
-      <ion-label>Unskilled</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value='learned'>
-      <ion-label>Learned</ion-label>
-    </ion-segment-button>
-  </ion-segment> -->
-  <ion-button expand="block" *ngIf="cards.length > 0" class="learn-button" (click)="navigateToStackLearnPage()"><ion-icon name="caret-forward-outline"></ion-icon></ion-button>
+                  <div #frontCard class="ion-padding ion-text-center card-front">
+                    <ion-label class="ion-text-center">{{card.front}}</ion-label>
+                  </div>
 
-  <ion-grid id="stackLearnOptionsBox" *ngIf="cards.length > 0">
-
-
-  <ion-list>
-      <ion-grid *ngIf="cards.length > 0">
-      <ion-row *ngFor="let card of cards; let i = index">
-        <ion-col size="12" *ngIf="!toggleDeleteCheck && !toggleEditCheck">
-          <div class='card-container'>
-
-            <div #frontCard class="ion-padding ion-text-center card-front">
-              <ion-label class="ion-text-center">{{card.front}}</ion-label>
-            </div>
-
-          </div>
-        </ion-col>
-        <ion-col size="11" *ngIf="toggleDeleteCheck || toggleEditCheck">
-          <div class='card-container'>
-
-            <div #frontCard class="ion-padding ion-text-center card-front">
-              <ion-label class="ion-text-center">{{card.front}}</ion-label>
-            </div>
-
-          </div>
-        </ion-col>
-        <ion-col size="1">
-          <ion-button color="danger" *ngIf="toggleDeleteCheck" [id]="'present-alert-'+card.id" class="ion-float-right ion-padding stackDeleteButton">Delete</ion-button>
-          <ion-alert *ngIf="toggleDeleteCheck" [trigger]="'present-alert-'+card.id" [header]="'Delete Card?'" [buttons]="deleteAlertButtons" (didDismiss)="setDeleteResult($event, card)"></ion-alert>
-          <ion-button *ngIf="toggleEditCheck" (click)="openEditCardModal(card)" color="primary" class="ion-float-right ion-padding">Edit</ion-button>
-        </ion-col>
-      </ion-row>
+                </div>
+              </ion-col>
+              <ion-col size="1">
+                <ion-button color="danger" *ngIf="toggleDeleteCheck" [id]="'present-alert-'+card.id" class="ion-float-right ion-padding stackDeleteButton">Delete</ion-button>
+                <ion-alert *ngIf="toggleDeleteCheck" [trigger]="'present-alert-'+card.id" [header]="'Delete Card?'" [buttons]="deleteAlertButtons" (didDismiss)="setDeleteResult($event, card)"></ion-alert>
+                <ion-button *ngIf="toggleEditCheck" (click)="openEditCardModal(card)" color="primary" class="ion-float-right ion-padding">Edit</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
       </ion-grid>
-    </ion-list>
-  </ion-grid>
     </ion-content>
   </div>
-  <!-- <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleEditCheck" (ionChange)="toggleEditCard($event)" class="ion-padding">Edit</ion-checkbox>
-  <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleDeleteCheck" (ionChange)="toggleDeleteCard($event)" class="ion-padding" >Delete</ion-checkbox>
-
-  <ion-button class="ion-float-right" id="open-card-form-modal" (click)="formMode = 'create'"><ion-icon name="add"></ion-icon></ion-button>
-  <ion-modal trigger="open-card-form-modal">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button (click)="closeCardFormModal()">Cancel</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <app-card-create-form *ngIf="formMode === 'create'" (submitStack)="saveCreatedCard($event)"></app-card-create-form>
-        <app-card-update-form *ngIf="formMode === 'edit'" (submitCard)="saveUpdatedCard($event)" [editCard]="editCard" [stacks]="stacks"></app-card-update-form>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-
-  <hr style="border-top: solid 1px lightgray;">
-  <ion-row>
-    <ion-accordion-group class="option-accordion" *ngIf="cards.length > 0">
-      <ion-accordion value="first">
-        <ion-item slot="header" color="light">
-          <ion-label>Options</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content">
-          <strong>Order Cards:</strong>
-          <ion-radio-group (ionChange)="toggleStackLearnOptionsOrder($event)" value="{{currentStack.cards.order}}" class="ion-padding">
-            <ion-label>Ordered</ion-label><ion-radio value="ordered" aria-label="front"></ion-radio>
-            <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
-          </ion-radio-group>
-        </div>
-        <div class="ion-padding" slot="content">
-          <strong>Show first: </strong>
-          <ion-radio-group (ionChange)="toggleStackLearnOptionsShowFirst($event)" value="{{currentStack.cards.show_first}}" class="ion-padding">
-            <ion-label>Front</ion-label><ion-radio value="front" aria-label="front"></ion-radio>
-            <ion-label>Back</ion-label><ion-radio value="back" aria-label="back"></ion-radio>
-            <ion-label>Mixed</ion-label><ion-radio value="mixed" aria-label="mixed"></ion-radio>
-          </ion-radio-group>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
-    <ion-button expand="block" *ngIf="cards.length > 0" class="learn-button" (click)="navigateToStackLearn()"><ion-icon name="caret-forward-outline"></ion-icon></ion-button>
-  </ion-row>
-  <ion-segment value="unskilled" (ionChange)="toggleLearnedAndUnskilled($event)">
-    <ion-segment-button value='unskilled'>
-      <ion-label>Unskilled</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value='learned'>
-      <ion-label>Learned</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-  <ion-grid id="stackLearnOptionsBox" *ngIf="cards.length > 0">
-
-
-
-
-
-  <ion-list>
-      <ion-grid *ngIf="cards.length > 0">
-      <ion-row *ngFor="let card of cards; let i = index">
-        <ion-col size="12" *ngIf="!toggleDeleteCheck && !toggleEditCheck">
-          <div class='card-container'>
-
-            <div #frontCard class="ion-padding ion-text-center card-front">
-              <ion-label class="ion-text-center">{{card.front}}</ion-label>
-            </div>
-
-          </div>
-        </ion-col>
-        <ion-col size="11" *ngIf="toggleDeleteCheck || toggleEditCheck">
-          <div class='card-container'>
-
-            <div #frontCard class="ion-padding ion-text-center card-front">
-              <ion-label class="ion-text-center">{{card.front}}</ion-label>
-            </div>
-
-          </div>
-        </ion-col>
-        <ion-col size="1">
-          <ion-button color="danger" *ngIf="toggleDeleteCheck" [id]="'present-alert-'+card.id" class="ion-float-right ion-padding stackDeleteButton">Delete</ion-button>
-          <ion-alert *ngIf="toggleDeleteCheck" [trigger]="'present-alert-'+card.id" [header]="'Delete Card?'" [buttons]="deleteAlertButtons" (didDismiss)="setDeleteResult($event, card)"></ion-alert>
-          <ion-button *ngIf="toggleEditCheck" (click)="openEditCardModal(card)" color="primary" class="ion-float-right ion-padding">Edit</ion-button>
-        </ion-col>
-      </ion-row>
-      </ion-grid>
-    </ion-list>
-  </ion-grid> -->
 </ion-content>

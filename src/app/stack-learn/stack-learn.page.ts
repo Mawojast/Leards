@@ -25,6 +25,9 @@ export class StackLearnPage implements OnInit {
   cards: Card[];
   stack: Stack;
   stackLength: number = 0;
+  name: string = '';
+  fontColor: string = '';
+  backgroundColor: string = '';
 
   learnedStack: number = 0;
   currentCardNumber: number = 1;
@@ -48,7 +51,7 @@ export class StackLearnPage implements OnInit {
     const result = await this.leardsStorage.get("stacks");
     if(result){
       let stacks = await JSON.parse(result);
-      this.stack = stacks.find((stack: { id: number; }) => stack.id === stackId)!;
+      this.stack = await stacks.find((stack: { id: number; }) => stack.id === stackId)!;
     }
   }
 
@@ -76,8 +79,6 @@ export class StackLearnPage implements OnInit {
    */
   onSlideChange(event: any ){
 
-    console.log(event.detail[0].activeIndex);
-    console.log(event);
     this.currentCardNumber = event.detail[0].activeIndex + 1;
 
   }
@@ -180,7 +181,6 @@ export class StackLearnPage implements OnInit {
           cardToUpdate.learned = card.learned;
         }
       });
-      console.log(cards);
       await this.leardsStorage.set("cards", JSON.stringify(cards));
     }else{
       alert('Sorry, update card went wrong');
@@ -201,11 +201,14 @@ export class StackLearnPage implements OnInit {
   async ngOnInit() {
 
     let stackId = parseInt(this.activeRoute.snapshot.paramMap.get('id')!);
-    this.loadStackFromStorage(stackId);
+    await this.loadStackFromStorage(stackId);
     this.learnedStack = parseInt(this.activeRoute.snapshot.paramMap.get('learned')!);
 
     await this.loadCardsFromStorage(stackId, this.learnedStack);
     this.stackLength = this.cards.length;
+    this.name = this.stack.name;
+    this.fontColor = this.stack.font_color;
+    this.backgroundColor = this.stack.background_color;
     this.orderCards(this.stack.cards.order);
     this.showFirst(this.stack.cards.show_first);
   }

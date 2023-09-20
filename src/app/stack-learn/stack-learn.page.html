@@ -1,8 +1,8 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" [ngStyle]="{'--ion-background-color': backgroundColor}">
   <ion-toolbar>
-    <ion-title>StackLearn</ion-title>
+    <ion-title [ngStyle]="{color: fontColor}">{{name}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="navigateToStackDetailsPage()"><ion-icon name="close"></ion-icon></ion-button>
+      <ion-button (click)="navigateToStackDetailsPage()" [ngStyle]="{color: fontColor}"><ion-icon name="close"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,30 +13,44 @@
       <ion-title size="large">StackLearn</ion-title>
     </ion-toolbar>
   </ion-header>
-  <swiper-container #swiper (slidechange)="onSlideChange($event)" [loop]="false">
-    <swiper-slide *ngFor="let card of cards; let i = index" [id]="card.id">
-      <ion-note>{{currentCardNumber}} | {{stackLength}}</ion-note>
-      <app-card-learn [card]="card"></app-card-learn>
-      <ion-button class="changeLearnedBtn" *ngIf="learnedStack === 0" expand="block" (click)="setCardToLearned($event, card)">Learned</ion-button>
-      <ion-button class="changeLearnedBtn" *ngIf="learnedStack === 1" expand="block" (click)="setCardToUnskilled($event, card)">Back to unskilled</ion-button>
-    </swiper-slide>
-    <swiper-slide class="final-swipe">
-      <ion-list>
-        <ion-grid>
-          <ion-row>
-            <ion-button (click)="navigateToStackDetailsPage()">You're done.<br><br> Congratulations!</ion-button>
-          </ion-row>
-          <ion-row *ngFor="let card of cardsSettedToLearnedOrUnskilledStack; let i = index">
-            <ion-col size="12">
-              <div class='card-container'>
-                <div #frontCard class="ion-padding ion-text-center card-front">
-                  <ion-label class="ion-text-center">{{card.front}}</ion-label>
+  <ion-grid>
+    <swiper-container #swiper (slidechange)="onSlideChange($event)" [loop]="false">
+      <swiper-slide *ngFor="let card of cards; let i = index" [id]="card.id">
+        <ion-row>
+          <ion-col>
+            <ion-note class="cardProgress">{{currentCardNumber}} | {{stackLength}}</ion-note>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <app-card-learn [card]="card"></app-card-learn>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button class="changeLearnedBtn" *ngIf="learnedStack === 0" expand="block" (click)="setCardToLearned($event, card)">Learned</ion-button>
+            <ion-button class="changeLearnedBtn" *ngIf="learnedStack === 1" expand="block" (click)="setCardToUnskilled($event, card)">Back to unskilled</ion-button>
+          </ion-col>
+        </ion-row>
+      </swiper-slide>
+      <swiper-slide class="final-swipe">
+        <ion-list>
+          <ion-grid>
+            <ion-row>
+              <ion-button (click)="navigateToStackDetailsPage()">You're done.<br><br> Congratulations!</ion-button>
+            </ion-row>
+            <ion-row *ngFor="let card of cardsSettedToLearnedOrUnskilledStack; let i = index">
+              <ion-col size="12">
+                <div class='card-container'>
+                  <div #frontCard class="ion-padding ion-text-center card-front">
+                    <ion-label class="ion-text-center">{{card.front}}</ion-label>
+                  </div>
                 </div>
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-list>
-    </swiper-slide>
-  </swiper-container>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
+      </swiper-slide>
+    </swiper-container>
+  </ion-grid>
 </ion-content>

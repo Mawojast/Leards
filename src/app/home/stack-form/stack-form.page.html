@@ -1,14 +1,12 @@
 <form [formGroup]="form" (ngSubmit)="submitForm()">
-  <ion-label for="name">Name</ion-label>
-  <ion-input id="name" formControlName="name"></ion-input>
+  <ion-input type="text" fill="solid" label="Name" labelPlacement="floating" id="name" formControlName="name"></ion-input>
 
-  <ion-label for="backgroundColor">Background</ion-label>
+  <ion-label for="backgroundColor">Hintergrundfarbe</ion-label>
   <ion-input type="color" id="backgroundColor" formControlName="background_color"></ion-input>
 
-  <ion-label for="fontColor">Font</ion-label>
-  <ion-input type="color" id="fontColor" formControlName="font_color"></ion-input>
+  <ion-input type="color" fill="solid" label="Schriftfarbe" id="fontColor" formControlName="font_color"></ion-input>
 
-  <ion-button type="submit" [disabled]="form.invalid">Save</ion-button>
+  <ion-button type="submit" [disabled]="form.invalid">Speichern</ion-button>
 </form>
 
 <pre>

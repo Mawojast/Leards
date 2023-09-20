@@ -1,9 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="submitForm()">
-  <ion-label for="front">Name</ion-label>
-  <ion-input id="front" formControlName="front"></ion-input>
-
-  <ion-label for="back">Back</ion-label>
-  <ion-input id="back" formControlName="back"></ion-input>
+  <ion-input type="text" fill="solid" label="Vorne" labelPlacement="floating" id="front" formControlName="front"></ion-input>
+  <br>
+  <ion-input type="text" fill="solid" label="Hinten" labelPlacement="floating" id="back" formControlName="back"></ion-input>
 
   <!--<ion-label for="stacks">Stack</ion-label>
   <select formControlName="stack_id">
