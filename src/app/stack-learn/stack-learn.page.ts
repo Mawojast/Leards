@@ -31,6 +31,7 @@ export class StackLearnPage implements OnInit {
 
   learnedStack: number = 0;
   currentCardNumber: number = 1;
+  currentCard: Card;
   cardsSettedToLearnedOrUnskilledStack: Card[] = [];
 
   @ViewChild('swiper')
@@ -80,6 +81,7 @@ export class StackLearnPage implements OnInit {
   onSlideChange(event: any ){
 
     this.currentCardNumber = event.detail[0].activeIndex + 1;
+    console.log(event);
 
   }
 

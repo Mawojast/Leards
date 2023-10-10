@@ -1,8 +1,13 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()">
-
-  <ion-input type="text" fill="solid" label="Vorne" labelPlacement="floating" ngModel id="front" formControlName="front"></ion-input>
-  <br>
-  <ion-input type="text" fill="solid" label="Hinten" labelPlacement="floating" ngModel id="back" formControlName="back"></ion-input>
-  <br>
-  <ion-button type="submit" [disabled]="form.invalid">Save</ion-button>
-</form>
+<ion-grid>
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <ion-row class="ion-padding-top ion-padding-bottom">
+      <ion-input type="text" fill="solid" label="Vorne" labelPlacement="floating" ngModel id="front" formControlName="front"></ion-input>
+    </ion-row>
+    <ion-row class="ion-padding-top ion-padding-bottom">
+      <ion-input type="text" fill="solid" label="Hinten" labelPlacement="floating" ngModel id="back" formControlName="back"></ion-input>
+    </ion-row>
+    <ion-row class="ion-padding-top ion-padding-bottom">
+      <ion-button type="submit" [disabled]="form.invalid">Save</ion-button>
+    </ion-row>
+  </form>
+</ion-grid>

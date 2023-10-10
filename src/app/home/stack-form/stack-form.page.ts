@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup ,FormControl, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { ColorPickerModule } from 'ngx-color-picker';
 import { Stack } from 'src/app/interfaces/stack';
 
 @Component({
@@ -9,12 +10,14 @@ import { Stack } from 'src/app/interfaces/stack';
   templateUrl: './stack-form.page.html',
   styleUrls: ['./stack-form.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, ColorPickerModule]
 })
 export class StackFormPage implements OnInit {
 
   @Input() editStack?: Stack;
   @Output() submitStack = new EventEmitter<Stack>();
+  fontColor: string = '#ffffff';
+
 
   form = new FormGroup({
     name: new FormControl('',{
@@ -33,6 +36,33 @@ export class StackFormPage implements OnInit {
 
   constructor() { }
 
+  inputFocus(event: any){
+    console.log(event);
+  }
+  fontColorPicker(event: any){
+
+  }
+
+  nameInputChange(event: any){
+    console.log(event.detail.value);
+    console.log(this.form.value.name);
+    if(this.form.value.name && this.form.value.background_color && this.form.value.font_color){
+      this.form.setValue({
+        name: event.detail.value,
+        background_color: this.form.value.background_color,
+        font_color: this.form.value.font_color
+      });
+    }
+  }
+  fontColorPickerSelect(event: any){
+    if(this.form.value.name && this.form.value.background_color && this.form.value.font_color){
+      this.form.setValue({
+        name: this.form.value.name,
+        background_color: this.form.value.background_color,
+        font_color: event
+      });
+    }
+  }
   submitForm(){
 
     const formValue = this.form.getRawValue();
