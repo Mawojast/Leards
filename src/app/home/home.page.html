@@ -16,7 +16,8 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <button class="btn"><i class="fa fa-trash"></i></button>
+        <button class="btn checkButton"><ion-icon (click)="toggleDeleteMode($event)" name="trash-outline" class="checkButtonIcon checkButtonDelete"></ion-icon></button>
+        <button class="btn checkButton"><ion-icon (click)="toggleEditMode($event)" name="create-outline" class="checkButtonIcon checkButtonEdit"></ion-icon></button>
         <ion-checkbox *ngIf="stacks.length > 0" [(ngModel)]="toggleEditCheck" (ionChange)="toggleEditStack($event)" class="ion-padding editCheckBox">Bearbeiten</ion-checkbox>
         <ion-checkbox *ngIf="stacks.length > 0" [(ngModel)]="toggleDeleteCheck" (ionChange)="toggleDeleteStack($event)" class="ion-padding editCheckBox">Löschen</ion-checkbox>
       </ion-col>

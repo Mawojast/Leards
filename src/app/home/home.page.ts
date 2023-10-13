@@ -73,6 +73,27 @@ export class HomePage {
     }
   }
 
+
+  toggleEditMode(event: any){
+
+    let editButton = event.target;
+    if(this.toggleEditCheck === false){
+      this.toggleEditCheck = true;
+    }else{
+      this.toggleEditCheck = false;
+    }
+    this.toggleDeleteCheck = false;
+  }
+
+  toggleDeleteMode(event: any){
+    let deleteButton = event.target;
+    if(this.toggleDeleteCheck === false){
+      this.toggleDeleteCheck = true
+    }else{
+      this.toggleDeleteCheck = false;
+    }
+    this.toggleEditCheck = false;
+  }
   /**
    * Assings edit checkbox condition to edit property and switches delete property to false
    *
