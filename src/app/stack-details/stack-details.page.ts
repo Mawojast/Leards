@@ -76,6 +76,33 @@ export class StackDetailsPage implements OnInit {
   ) { }
 
   /**
+   * Assings editMode to true/false and switches deleteMode property to false
+   *
+   */
+  toggleEditMode(){
+
+    if(this.toggleEditCheck === false){
+      this.toggleEditCheck = true;
+      this.toggleDeleteCheck = false;
+    }else{
+      this.toggleEditCheck = false;
+    }
+  }
+
+    /**
+   * Assings DeleteMode to true/false and switches EditMode property to false
+   *
+   */
+  toggleDeleteMode(){
+
+    if(this.toggleDeleteCheck === false){
+      this.toggleDeleteCheck = true
+      this.toggleEditCheck = false;
+    }else{
+      this.toggleDeleteCheck = false;
+    }
+  }
+  /**
    * Assings edit checkbox condition to edit property and switches delete property to false
    *
    * @param event - Checkbox Object

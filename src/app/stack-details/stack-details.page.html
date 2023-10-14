@@ -63,9 +63,9 @@
       </ion-segment-button>
     </ion-segment>
     <ion-content class="ion-padding">
-      <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleEditCheck" (ionChange)="toggleEditCard($event)" class="ion-padding editCheckBox">Bearbeiten</ion-checkbox>
-      <ion-checkbox *ngIf="cards.length > 0" [(ngModel)]="toggleDeleteCheck" (ionChange)="toggleDeleteCard($event)" class="ion-padding editCheckBox">Löschen</ion-checkbox>
-      <ion-button class="ion-float-right" id="open-card-form-modal" (click)="formMode = 'create'"><ion-icon name="add"></ion-icon></ion-button>
+      <button [ngStyle]="{'background-color': toggleEditCheck ? '#0066ff' : '#d9d9d9'}" class="btn checkButton" (click)="toggleEditMode()"><ion-icon name="settings-outline" class="checkButtonIcon"></ion-icon></button>
+      <button [ngStyle]="{'background-color': toggleDeleteCheck ? '#ff3333' : '#d9d9d9'}" class="btn checkButton" (click)="toggleDeleteMode()"><ion-icon name="trash-outline" class="checkButtonIcon"></ion-icon></button>
+      <button class="ion-float-right btn addButton" id="open-card-form-modal" (click)="formMode = 'create'"><ion-icon name="add" class="checkButtonIcon"></ion-icon></button>
       <ion-modal trigger="open-card-form-modal">
         <ng-template>
           <ion-header>
@@ -96,7 +96,7 @@
 
                 </div>
               </ion-col>
-              <ion-col size="11" *ngIf="toggleDeleteCheck || toggleEditCheck">
+              <ion-col size="10" *ngIf="toggleDeleteCheck || toggleEditCheck">
                 <div class='card-container'>
 
                   <div #frontCard class="ion-padding ion-text-center card-front">
@@ -106,9 +106,9 @@
                 </div>
               </ion-col>
               <ion-col size="1">
-                <ion-button color="danger" *ngIf="toggleDeleteCheck" [id]="'present-alert-'+card.id" class="ion-float-right ion-padding stackDeleteButton">Delete</ion-button>
+                <button *ngIf="toggleDeleteCheck" [id]="'present-alert-'+card.id" class="deleteButton"><ion-icon name="trash-outline" class="checkButtonIcon"></ion-icon></button>
                 <ion-alert *ngIf="toggleDeleteCheck" [trigger]="'present-alert-'+card.id" [header]="'Delete Card?'" [buttons]="deleteAlertButtons" (didDismiss)="setDeleteResult($event, card)"></ion-alert>
-                <ion-button *ngIf="toggleEditCheck" (click)="openEditCardModal(card)" color="primary" class="ion-float-right ion-padding">Edit</ion-button>
+                <button *ngIf="toggleEditCheck" (click)="openEditCardModal(card)" class="editButton"><ion-icon name="settings-outline" class="checkButtonIcon"></ion-icon></button>
               </ion-col>
             </ion-row>
           </ion-grid>

@@ -46,14 +46,38 @@ ion-title{
   margin-left: 1rem;
   border-radius: 10%;
   border: none;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 .checkButtonIcon{
   width: 2.5rem;
   height: 2.5rem;
-}
-.checkButtonDelete{
   border-radius: 10%;
 }
-.checkButtonEdit{
+button{
+  border: none;
+  outline: none;
+}
+.editButton{
+  margin-top: 1rem;
+  border-radius: 10%;
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #0066ff;
+}
 
+.deleteButton{
+  margin-top: 1rem;
+  border-radius: 10%;
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #ff3333;
+}
+.addButton{
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10%;
+  margin-right: 0.8rem;
 }

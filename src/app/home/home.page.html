@@ -16,13 +16,11 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <button class="btn checkButton"><ion-icon (click)="toggleDeleteMode($event)" name="trash-outline" class="checkButtonIcon checkButtonDelete"></ion-icon></button>
-        <button class="btn checkButton"><ion-icon (click)="toggleEditMode($event)" name="create-outline" class="checkButtonIcon checkButtonEdit"></ion-icon></button>
-        <ion-checkbox *ngIf="stacks.length > 0" [(ngModel)]="toggleEditCheck" (ionChange)="toggleEditStack($event)" class="ion-padding editCheckBox">Bearbeiten</ion-checkbox>
-        <ion-checkbox *ngIf="stacks.length > 0" [(ngModel)]="toggleDeleteCheck" (ionChange)="toggleDeleteStack($event)" class="ion-padding editCheckBox">Löschen</ion-checkbox>
+        <button [ngStyle]="{'background-color': toggleEditCheck ? '#0066ff' : '#d9d9d9'}" class="btn checkButton" (click)="toggleEditMode()"><ion-icon name="settings-outline" class="checkButtonIcon"></ion-icon></button>
+        <button [ngStyle]="{'background-color': toggleDeleteCheck ? '#ff3333' : '#d9d9d9'}" class="btn checkButton" (click)="toggleDeleteMode()"><ion-icon name="trash-outline" class="checkButtonIcon"></ion-icon></button>
       </ion-col>
       <ion-col>
-        <ion-button class="ion-float-right" id="open-modal"><ion-icon name="add"></ion-icon></ion-button>
+        <button class="ion-float-right btn addButton" id="open-modal"><ion-icon name="add" class="checkButtonIcon"></ion-icon></button>
         <ion-modal trigger="open-modal">
           <ng-template>
             <ion-header>
@@ -51,15 +49,15 @@
             <ion-label class="ion-text-center stackTitle">{{ stack.name }}</ion-label>
           </ion-card>
         </ion-col>
-        <ion-col size="11" *ngIf="toggleDeleteCheck || toggleEditCheck">
+        <ion-col size="10" *ngIf="toggleDeleteCheck || toggleEditCheck">
           <ion-card *ngIf="stack" [routerLink]="'/stack-details/' + stack.id" class="ion-padding"  [ngStyle]="{'background-color': stack.background_color, 'color': stack.font_color}" style="font-size: 1.2rem;">
             <ion-label class="ion-text-center stackTitle">{{ stack.name }}</ion-label>
           </ion-card>
         </ion-col>
         <ion-col size="1">
-          <ion-button color="danger" *ngIf="toggleDeleteCheck" [id]="'present-alert-'+stack.id" class="ion-float-right ion-padding stackDeleteButton">Delete</ion-button>
+          <button *ngIf="toggleDeleteCheck" [id]="'present-alert-'+stack.id" class="deleteButton"><ion-icon name="trash-outline" class="checkButtonIcon"></ion-icon></button>
           <ion-alert *ngIf="toggleDeleteCheck" [trigger]="'present-alert-'+stack.id" [header]="'Delete Card?'" [buttons]="deleteAlertButtons" (didDismiss)="setDeleteResult($event, stack.id)"></ion-alert>
-          <ion-button *ngIf="toggleEditCheck" (click)="openEditStackModal(stack)" color="primary" class="ion-float-right ion-padding">Edit</ion-button>
+          <button *ngIf="toggleEditCheck" (click)="openEditStackModal(stack)" class="editButton"><ion-icon name="settings-outline" class="checkButtonIcon"></ion-icon></button>
         </ion-col>
       </ion-row>
     </ion-list>

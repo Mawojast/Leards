@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicModule, IonModal } from '@ionic/angular';
 import { StackFormPage } from './stack-form/stack-form.page';
 import { Stack } from '../interfaces/stack';
@@ -73,52 +73,32 @@ export class HomePage {
     }
   }
 
+  /**
+   * Assings editMode to true/false and switches deleteMode property to false
+   *
+   */
+  toggleEditMode(){
 
-  toggleEditMode(event: any){
-
-    let editButton = event.target;
     if(this.toggleEditCheck === false){
       this.toggleEditCheck = true;
+      this.toggleDeleteCheck = false;
     }else{
       this.toggleEditCheck = false;
     }
-    this.toggleDeleteCheck = false;
   }
 
-  toggleDeleteMode(event: any){
-    let deleteButton = event.target;
+    /**
+   * Assings DeleteMode to true/false and switches EditMode property to false
+   *
+   */
+  toggleDeleteMode(){
+
     if(this.toggleDeleteCheck === false){
       this.toggleDeleteCheck = true
+      this.toggleEditCheck = false;
     }else{
       this.toggleDeleteCheck = false;
     }
-    this.toggleEditCheck = false;
-  }
-  /**
-   * Assings edit checkbox condition to edit property and switches delete property to false
-   *
-   * @param event - Checkbox Object
-   */
-  toggleEditStack(event: any){
-
-    if(event.detail.checked === true){
-      this.toggleDeleteCheck = false;
-    }
-    this.toggleEditCheck = event.detail.checked;
-
-  }
-
-  /**
-   * Assings delete checkbox condition to edit property and switches edit property to false
-   *
-   * @param event - Checkbox Object
-   */
-  toggleDeleteStack(event: any){
-
-    if(event.detail.checked === true){
-      this.toggleEditCheck = false;
-    }
-    this.toggleDeleteCheck = event.detail.checked;
   }
 
   /**
