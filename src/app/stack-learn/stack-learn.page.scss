@@ -14,3 +14,25 @@
   font-size: 1rem;
   font-weight: 800;
 }
+.cardFront{
+  background: hsl(210, 50%, 30%);
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.congrateButton{
+  display: flex;
+  justify-content: center;
+}
+.closeStackLearnButton{
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10%;
+  margin-right: 0.8rem;
+  background: hsl(210, 50%, 30%);
+  color: #b6c4d3;
+}
+.checkButtonIcon{
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10%;
+}

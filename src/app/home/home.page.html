@@ -26,7 +26,7 @@
             <ion-header>
               <ion-toolbar>
                 <ion-buttons slot="end">
-                  <ion-button (click)="closeStackFormModal()"><ion-icon name="close"></ion-icon></ion-button>
+                  <button class="closeModalButton" (click)="closeStackFormModal()"><ion-icon name="close" class="checkButtonIcon"></ion-icon></button>
                 </ion-buttons>
               </ion-toolbar>
             </ion-header>
@@ -45,12 +45,12 @@
     <ion-list>
       <ion-row *ngFor="let stack of stacks; let i = index">
         <ion-col size="12" *ngIf="!toggleDeleteCheck && !toggleEditCheck">
-          <ion-card *ngIf="stack" [routerLink]="'/stack-details/' + stack.id" class="ion-padding"  [ngStyle]="{'background-color': stack.background_color, 'color': stack.font_color}" style="font-size: 1.2rem;">
+          <ion-card *ngIf="stack" [routerLink]="'/stack-details/' + stack.id" class="ion-padding ion-text-center"  [ngStyle]="{'background-color': stack.background_color, 'color': stack.font_color}" style="font-size: 1.2rem;">
             <ion-label class="ion-text-center stackTitle">{{ stack.name }}</ion-label>
           </ion-card>
         </ion-col>
         <ion-col size="10" *ngIf="toggleDeleteCheck || toggleEditCheck">
-          <ion-card *ngIf="stack" [routerLink]="'/stack-details/' + stack.id" class="ion-padding"  [ngStyle]="{'background-color': stack.background_color, 'color': stack.font_color}" style="font-size: 1.2rem;">
+          <ion-card *ngIf="stack" [routerLink]="'/stack-details/' + stack.id" class="ion-padding ion-text-center"  [ngStyle]="{'background-color': stack.background_color, 'color': stack.font_color}" style="font-size: 1.2rem;">
             <ion-label class="ion-text-center stackTitle">{{ stack.name }}</ion-label>
           </ion-card>
         </ion-col>

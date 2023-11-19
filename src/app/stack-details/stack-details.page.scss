@@ -12,7 +12,7 @@
   font-size: 1.2rem;
   color: #b6c4d3;
 }
-.card-front{
+.cardFront{
   background: hsl(210, 50%, 30%);
   font-size: 1.3rem;
   font-weight: 500;
@@ -67,7 +67,7 @@ button{
   outline: none;
 }
 .editButton{
-  margin-top: 1rem;
+  margin-top: 0.8rem;
   border-radius: 10%;
   border: none;
   width: 2.5rem;
@@ -76,7 +76,7 @@ button{
 }
 
 .deleteButton{
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   border-radius: 10%;
   border: none;
   width: 2.5rem;
@@ -88,4 +88,14 @@ button{
   height: 2.5rem;
   border-radius: 10%;
   margin-right: 0.8rem;
+  background: hsl(210, 50%, 30%);
+  color: #b6c4d3;
+}
+.closeModalButton{
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10%;
+  margin-right: 0.8rem;
+  background: hsl(210, 50%, 30%);
+  color: #b6c4d3;
 }

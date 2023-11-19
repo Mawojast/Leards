@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title [ngStyle]="{color: fontColor}">{{name}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="navigateToStackDetailsPage()" [ngStyle]="{color: fontColor}"><ion-icon name="close"></ion-icon></ion-button>
+      <button class="closeStackLearnButton" (click)="navigateToStackDetailsPage()" [ngStyle]="{color: fontColor}"><ion-icon name="close" class="checkButtonIcon"></ion-icon></button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -37,12 +37,16 @@
         <ion-list>
           <ion-grid>
             <ion-row>
-              <ion-button (click)="navigateToStackDetailsPage()">You're done.<br><br> Congratulations!</ion-button>
+              <ion-col size="12">
+
+                  <ion-button class="congrateButton" (click)="navigateToStackDetailsPage()">You're done.<br><br> Congratulations!</ion-button>
+
+              </ion-col>
             </ion-row>
             <ion-row *ngFor="let card of cardsSettedToLearnedOrUnskilledStack; let i = index">
               <ion-col size="12">
                 <div class='card-container'>
-                  <div #frontCard class="ion-padding ion-text-center card-front">
+                  <div #frontCard class="ion-padding ion-text-center cardFront">
                     <ion-label class="ion-text-center">{{card.front}}</ion-label>
                   </div>
                 </div>

@@ -71,7 +71,7 @@
           <ion-header>
             <ion-toolbar>
               <ion-buttons slot="end">
-                <ion-button (click)="closeCardFormModal()"><ion-icon name="close"></ion-icon></ion-button>
+                <button class="closeModalButton" (click)="closeCardFormModal()"><ion-icon name="close" class="checkButtonIcon"></ion-icon></button>
               </ion-buttons>
             </ion-toolbar>
           </ion-header>
@@ -90,8 +90,8 @@
               <ion-col size="12" *ngIf="!toggleDeleteCheck && !toggleEditCheck">
                 <div class='card-container'>
 
-                  <div #frontCard class="ion-padding ion-text-center card-front">
-                    <ion-label class="ion-text-center">{{card.front}}</ion-label>
+                  <div #frontCard class="ion-padding ion-text-center cardFront">
+                    <ion-label>{{card.front}}</ion-label>
                   </div>
 
                 </div>
@@ -99,7 +99,7 @@
               <ion-col size="10" *ngIf="toggleDeleteCheck || toggleEditCheck">
                 <div class='card-container'>
 
-                  <div #frontCard class="ion-padding ion-text-center card-front">
+                  <div #frontCard class="ion-padding ion-text-center cardFront">
                     <ion-label class="ion-text-center">{{card.front}}</ion-label>
                   </div>
 
