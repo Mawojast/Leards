@@ -11,9 +11,7 @@ A simple lightweight flashcards Android App.
 ![App Screenshot](stackPage.png)
 
 ## Stack detail Page
-Overview of learned and unlearned cards  
-![App Screenshot](stackDetailPage.png)  
-
+Overview of learned and unlearned cards   
 Add, remove or edit Cards  
 ![App Screenshot](stackDetailDeletePage.png)  
 
