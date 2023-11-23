@@ -3,39 +3,39 @@
   <ion-menu side="end" contentId="main-content" [ngStyle]="{'--ion-background-color': currentStack.background_color}">
     <ion-header>
       <ion-toolbar>
-        <ion-title [ngStyle]="{color: currentStack.font_color}">Optionen</ion-title>
+        <ion-title [ngStyle]="{color: currentStack.font_color}">Settings</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <ion-grid [ngStyle]="{color: currentStack.font_color}">
         <ion-row>
-          <ion-col><strong class="optionSectionTitle">Reihenfolge:</strong></ion-col>
+          <ion-col><strong class="optionSectionTitle">Order:</strong></ion-col>
         </ion-row>
         <ion-radio-group (ionChange)="toggleStackLearnOptionsOrder($event)" value="{{currentStack.cards.order}}" class="ion-padding">
           <ion-row>
-            <ion-col><ion-label class="optionTitle">Geordnet</ion-label></ion-col>
+            <ion-col><ion-label class="optionTitle">Ordered</ion-label></ion-col>
             <ion-col><ion-radio value="ordered" aria-label="front" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><ion-label class="optionTitle">Gemischt</ion-label></ion-col>
+            <ion-col><ion-label class="optionTitle">Mixed</ion-label></ion-col>
             <ion-col><ion-radio value="mixed" aria-label="mixed" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
         </ion-radio-group>
 
         <ion-row>
-          <strong class="optionSectionTitle">Zuerst Anzeigen:</strong>
+          <strong class="optionSectionTitle">Show first:</strong>
         </ion-row>
         <ion-radio-group (ionChange)="toggleStackLearnOptionsShowFirst($event)" value="{{currentStack.cards.show_first}}" class="ion-padding">
           <ion-row>
-            <ion-col><ion-label class="optionTitle">Vorne</ion-label></ion-col>
+            <ion-col><ion-label class="optionTitle">Front</ion-label></ion-col>
             <ion-col><ion-radio value="front" aria-label="front" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><ion-label class="optionTitle">Hinten</ion-label></ion-col>
+            <ion-col><ion-label class="optionTitle">Back</ion-label></ion-col>
             <ion-col><ion-radio value="back" aria-label="back" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><ion-label class="optionTitle">Gemischt</ion-label></ion-col>
+            <ion-col><ion-label class="optionTitle">Mixed</ion-label></ion-col>
             <ion-col><ion-radio value="mixed" aria-label="mixed" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
         </ion-radio-group>
@@ -56,10 +56,10 @@
     </ion-header>
     <ion-segment value="unskilled" (ionChange)="toggleLearnedAndUnskilled($event)">
       <ion-segment-button value='unskilled'>
-        <ion-label class="section">Ungelernt</ion-label>
+        <ion-label class="section">Learn</ion-label>
       </ion-segment-button>
       <ion-segment-button value='learned'>
-        <ion-label class="section">Gelernt</ion-label>
+        <ion-label class="section">Learned</ion-label>
       </ion-segment-button>
     </ion-segment>
     <ion-content class="ion-padding">
@@ -120,7 +120,7 @@
   </div>
 </ion-content>
 <ion-footer>
-  <ion-toolbar>
-    <ion-button size="large" expand="block" *ngIf="cards.length > 0" class="learn-button" (click)="navigateToStackLearnPage()"><ion-icon name="caret-forward-outline"></ion-icon></ion-button>
+  <ion-toolbar [ngStyle]="{'background-color': currentStack.background_color}">
+    <ion-button size="large" expand="block" *ngIf="cards.length > 0" class="learn-button" [ngStyle]="{'--background': currentStack.background_color}" (click)="navigateToStackLearnPage()"><ion-icon name="caret-forward-outline" [ngStyle]="{'color': currentStack.font_color}"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-footer>

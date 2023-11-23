@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title [ngStyle]="{color: fontColor}">{{name}}</ion-title>
     <ion-buttons slot="end">
-      <button class="closeStackLearnButton" (click)="navigateToStackDetailsPage()" [ngStyle]="{color: fontColor}"><ion-icon name="close" class="checkButtonIcon"></ion-icon></button>
+      <button class="closeStackLearnButton" (click)="navigateToStackDetailsPage()" [ngStyle]="{color: fontColor, background: backgroundColor}"><ion-icon name="close" class="checkButtonIcon"></ion-icon></button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -28,8 +28,8 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-button class="changeLearnedBtn" *ngIf="learnedStack === 0" expand="block" (click)="setCardToLearned($event, card)">Learned</ion-button>
-            <ion-button class="changeLearnedBtn" *ngIf="learnedStack === 1" expand="block" (click)="setCardToUnskilled($event, card)">Back to unskilled</ion-button>
+            <ion-button class="changeLearnedBtn" [ngStyle]="{'--background': backgroundColor, 'color': fontColor}" *ngIf="learnedStack === 0" expand="block" (click)="setCardToLearned($event, card)">Learned</ion-button>
+            <ion-button class="changeLearnedBtn" [ngStyle]="{'--background': backgroundColor, 'color': fontColor}" *ngIf="learnedStack === 1" expand="block" (click)="setCardToUnskilled($event, card)">Learn</ion-button>
           </ion-col>
         </ion-row>
       </swiper-slide>
@@ -39,7 +39,7 @@
             <ion-row>
               <ion-col size="12">
 
-                  <ion-button class="congrateButton" (click)="navigateToStackDetailsPage()">You're done.<br><br> Congratulations!</ion-button>
+                  <ion-button class="congrateButton" [ngStyle]="{'--background': backgroundColor, 'color': fontColor}" (click)="navigateToStackDetailsPage()">You are done.<br><br>Congratulations!</ion-button>
 
               </ion-col>
             </ion-row>

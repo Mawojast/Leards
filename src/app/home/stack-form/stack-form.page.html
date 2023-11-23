@@ -7,7 +7,7 @@
     </ion-row>
     <ion-row>
       <ion-col size="4" class="ion-padding-top ion-padding-bottom">
-        <ion-label for="backgroundColor" class="input-label">Hintergrund</ion-label>
+        <ion-label for="backgroundColor" class="input-label">Background</ion-label>
       </ion-col>
       <ion-col class="ion-padding-top ion-padding-bottom">
         <input type="color" id="backgroundColor" formControlName="background_color">
@@ -22,12 +22,17 @@
     <!-- <ion-input [(colorPicker)]="fontColor" (colorPickerSelect)="fontColorPickerSelect($event)" (colorPickerChange)="fontColorPicker($event)" [style.background]="fontColor" cpOutputFormat="hex" formControlName="font_color"></ion-input> -->
     <ion-row>
       <ion-col size="4" class="ion-padding-top ion-padding-bottom">
-        <ion-label for="backgroundColor" class="input-label">Schrift</ion-label>
+        <ion-label for="backgroundColor" class="input-label">Font</ion-label>
       </ion-col>
       <ion-col class="ion-padding-top ion-padding-bottom">
         <input type="color" id="fontColor" formControlName="font_color">
       </ion-col>
     </ion-row>
+    <pre>
+      <ion-card class="ion-padding"  [ngStyle]="{'background-color': form.value.background_color}">
+        <ion-label class="ion-text-center" [ngStyle]="{'color': form.value.font_color}">{{form.value.name}}</ion-label>
+      </ion-card>
+    </pre>
     <!-- <ion-input [(colorPicker)]="color" [style.background]="color" fill="solid" label="FontColor" labelPlacement="floating"  formControlName="font_color"></ion-input> -->
     <ion-row>
       <ion-col class="ion-padding-top ion-padding-bottom">
@@ -36,10 +41,6 @@
     </ion-row>
   </form>
 </ion-grid>
-  <pre>
-    <ion-card class="ion-padding"  [ngStyle]="{'background-color': form.value.background_color}">
-      <ion-label class="ion-text-center" [ngStyle]="{'color': form.value.font_color}">{{form.value.name}}</ion-label>
-    </ion-card>
-  </pre>
+
 
 

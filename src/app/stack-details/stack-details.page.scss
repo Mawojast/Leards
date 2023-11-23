@@ -1,8 +1,9 @@
 .option-accordion{
   width: 50vw;
 }
-.learnButton{
 
+ion-title{
+  font-size: 1.5rem;
 }
 // .section{
 //   font-size: 1.4rem;
@@ -22,32 +23,32 @@
 }
 .optionTitle{
   font-size: 1.2rem;
+  font-weight: 600;
 }
 .card-container{
   color: #b6c4d3;
 }
 
 ion-segment-button::part(indicator-background) {
-  background: #08a391;
+  background: #b6c4d3;
 }
 
+
 .section{
+  padding: 1.5rem;
   font-size: 1.4rem;
 }
 /* Material Design styles */
 ion-segment-button.md::part(native) {
-  color: #b6c4d3;
+  color:hsl(210, 50%, 30%);
 }
 
 .segment-button-checked.md::part(native) {
-  color: #08a391;
+  color: #b6c4d3;
 }
 
 ion-segment-button.md::part(indicator-background) {
   height: 4px;
-}
-.cardList{
-  //overflow: scroll;
 }
 
 .checkButton{
