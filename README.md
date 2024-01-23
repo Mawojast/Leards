@@ -2,7 +2,7 @@
 # leards
 
 
-A simple lightweight flashcards Android App.
+A simple lightweight flashcards Android App with Angular, Capacitor, Ionic.
 
 
 ## Stack list Page
