@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { IonicModule, IonModal } from '@ionic/angular';
 import { StackFormPage } from './stack-form/stack-form.page';
 import { Stack } from '../interfaces/stack';
@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage-angular';
 import { RouterModule } from '@angular/router';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { FormsModule, NgModel } from '@angular/forms';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
@@ -13,10 +14,21 @@ import { FormsModule, NgModel } from '@angular/forms';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonicModule, FormsModule, StackFormPage, RouterModule, CommonModule],
+  imports: [IonicModule, FormsModule, StackFormPage, RouterModule, CommonModule, TranslateModule],
 
 })
-export class HomePage {
+export class HomePage implements AfterViewInit {
+
+  appLanguageList = [
+    { code: 'en', title: 'english', text: 'English'},
+    { code: 'de', title: 'german', text: 'Germany'},
+  ];
+
+  isModalOpen = false;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
 
   toggleEditCheck: boolean = false;
   toggleDeleteCheck: boolean = false;
@@ -44,7 +56,8 @@ export class HomePage {
     },
   ];
 
-  constructor(private leardsStorage: Storage) {}
+  constructor(private leardsStorage: Storage, private translateService: TranslateService) {
+  }
 
   /**
    * Prepares stack form modal to edit a stack
@@ -176,6 +189,39 @@ export class HomePage {
     await this.saveStacksToStorage()
     await this.loadStacksFromStorage();
     this.closeStackFormModal();
+  }
+
+  getTranslatedDeletePrompt(key: string, stackName: string){
+    let translatedText = this.translateService.instant(key);
+    return translatedText+" "+stackName+"?";
+  }
+
+  getTranslatedSelectLanguageLabel(key: string){
+    return  this.translateService.instant(key);
+  }
+
+  onLanguageChange(e: any) {
+    this.translateService.use(e.target.value ? e.target.value : "en");
+  }
+
+  getCurrentLanguage(){
+    const currentLanguageCode = this.translateService.currentLang;
+    const language = this.appLanguageList.find(lang => lang.code === currentLanguageCode);
+    return language?.text;
+  }
+
+  ngAfterViewInit() {
+    this.configureSelectInterfaceOptions();
+  }
+
+  configureSelectInterfaceOptions() {
+    const select = document.querySelector('ion-select');
+    console.log(select);
+    if (select) {
+      select.interfaceOptions = {
+        cssClass: 'custom-popover'
+      };
+    }
   }
 
   /**

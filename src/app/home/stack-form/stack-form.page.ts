@@ -4,13 +4,14 @@ import { FormsModule, ReactiveFormsModule, FormGroup ,FormControl, Validators } 
 import { IonicModule } from '@ionic/angular';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { Stack } from 'src/app/interfaces/stack';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-stack-form',
   templateUrl: './stack-form.page.html',
   styleUrls: ['./stack-form.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, ColorPickerModule]
+  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, ColorPickerModule, TranslateModule]
 })
 export class StackFormPage implements OnInit {
 

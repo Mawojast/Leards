@@ -1,3 +1,28 @@
 {
-  "page_home_title": "Stacks"
+  "page_home_title": "Stacks",
+  "delete_stack_prompt": "Delete stack",
+  "delete_card_prompt": "Delete card",
+  "select_language_label": "Language",
+  "form": {
+    "label_backgroundColor": "Background",
+    "label_fontColor": "Font",
+    "value_submit": "Save",
+    "front": "Front",
+    "back": "Back"
+  },
+  "stack":{
+    "learn": "Learn",
+    "learned": "Learned",
+    "done": "You are done",
+    "congratulation": "Congratulations!",
+    "settings": {
+      "label": "Settings",
+      "label_order": "Order:",
+      "label_show_first": "Show first:",
+      "ordered": "Ordered",
+      "mixed":  "Mixed",
+      "front": "Front",
+      "back": "Back"
+    }
+  }
 }

@@ -2,6 +2,7 @@ import { Component, EventEmitter,Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Card } from 'src/app/interfaces/card';
 
 @Component({
@@ -9,7 +10,7 @@ import { Card } from 'src/app/interfaces/card';
   templateUrl: './card-create-form.page.html',
   styleUrls: ['./card-create-form.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, TranslateModule]
 })
 export class CardCreateFormPage{
 
@@ -29,6 +30,12 @@ export class CardCreateFormPage{
         Validators.maxLength(256)]
     }),
   });
+
+  constructor(private translateService: TranslateService) { }
+
+  getTranslatedLanguage(key: string){
+    return this.translateService.instant(key);
+  }
 
   submitForm(){
 

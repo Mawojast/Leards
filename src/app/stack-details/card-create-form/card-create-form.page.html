@@ -1,13 +1,13 @@
 <ion-grid>
   <form [formGroup]="form" (ngSubmit)="submitForm()">
     <ion-row class="ion-padding-top ion-padding-bottom">
-      <ion-input type="text" fill="solid" label="Front" labelPlacement="floating" ngModel id="front" formControlName="front"></ion-input>
+      <ion-input type="text" fill="solid" [label]="getTranslatedLanguage('form.front')" labelPlacement="floating" ngModel id="front" formControlName="front"></ion-input>
     </ion-row>
     <ion-row class="ion-padding-top ion-padding-bottom">
-      <ion-input type="text" fill="solid" label="Back" labelPlacement="floating" ngModel id="back" formControlName="back"></ion-input>
+      <ion-input type="text" fill="solid" [label]="getTranslatedLanguage('form.back')" labelPlacement="floating" ngModel id="back" formControlName="back"></ion-input>
     </ion-row>
     <ion-row class="ion-padding-top ion-padding-bottom">
-      <ion-button type="submit" [disabled]="form.invalid">Save</ion-button>
+      <ion-button type="submit" [disabled]="form.invalid" translate>form.value_submit</ion-button>
     </ion-row>
   </form>
 </ion-grid>

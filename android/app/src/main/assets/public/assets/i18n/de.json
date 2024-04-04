@@ -1,3 +1,29 @@
 {
-  "page_home_title": "Stapel"
+
+    "page_home_title": "Stapel",
+    "delete_stack_prompt": "Lösche Stapel",
+    "delete_card_prompt": "Lösche Karte",
+    "select_language_label": "Sprache",
+    "form":{
+      "label_backgroundColor": "Hintergrund",
+      "label_fontColor": "Schrift",
+      "value_submit": "Speichern",
+      "front": "Vorne",
+      "back": "Hinten"
+    },
+    "stack":{
+      "learn": "Lernen",
+      "learned": "Gelernt",
+      "done": "Du bist Fertig",
+      "congratulation": "Glückwunsch!",
+      "settings": {
+        "label": "Einstellungen",
+        "label_order": "Reihenfolge:",
+        "label_show_first": "Zuerst anzeigen:",
+        "ordered": "Geordnet",
+        "mixed":  "Gemischt",
+        "front": "Vorderseite",
+        "back": "Rückseite"
+      }
+    }
 }

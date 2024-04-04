@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="submitForm()">
-  <ion-input type="text" fill="solid" label="Front" labelPlacement="floating" id="front" formControlName="front"></ion-input>
+  <ion-input translate type="text" fill="solid" [label]="getTranslatedLanguage('form.front')" labelPlacement="floating" id="front" formControlName="front"></ion-input>
   <br>
-  <ion-input type="text" fill="solid" label="Back" labelPlacement="floating" id="back" formControlName="back"></ion-input>
+  <ion-input type="text" fill="solid" [label]="getTranslatedLanguage('form.back')" labelPlacement="floating" id="back" formControlName="back"></ion-input>
 
   <!--<ion-label for="stacks">Stack</ion-label>
   <select formControlName="stack_id">
@@ -11,11 +11,11 @@
   </select>-->
 
   <ion-radio-group formControlName="learned">
-    <ion-label>Learn</ion-label>
+    <ion-label translate>stack.learn</ion-label>
     <ion-radio value="0" aria-label="Custom checkbox that is checked"></ion-radio>
-    <ion-label>Learned</ion-label>
+    <ion-label translate>stack.learned</ion-label>
     <ion-radio value="1" aria-label="Custom checkbox"></ion-radio>
   </ion-radio-group>
 
-  <ion-button type="submit" [disabled]="form.invalid">Save</ion-button>
+  <ion-button type="submit" [disabled]="form.invalid" translate>form.value_submit</ion-button>
 </form>

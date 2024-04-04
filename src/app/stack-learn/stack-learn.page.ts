@@ -9,6 +9,7 @@ import { Stack } from '../interfaces/stack';
 import { CardLearnPage } from './card-learn/card-learn.page';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { register } from 'swiper/element/bundle';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 register();
 
@@ -17,7 +18,7 @@ register();
   templateUrl: './stack-learn.page.html',
   styleUrls: ['./stack-learn.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, CardLearnPage, RouterLink],
+  imports: [IonicModule, CommonModule, FormsModule, CardLearnPage, RouterLink, TranslateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class StackLearnPage implements OnInit {

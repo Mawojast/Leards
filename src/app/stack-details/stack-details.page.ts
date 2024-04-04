@@ -9,13 +9,14 @@ import { Stack } from '../interfaces/stack';
 import { Card } from '../interfaces/card';
 import { CardCreateFormPage } from './card-create-form/card-create-form.page';
 import { CardUpdateFormPage } from './card-update-form/card-update-form.page';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-stack-details',
   templateUrl: './stack-details.page.html',
   styleUrls: ['./stack-details.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, CardCreateFormPage, CardUpdateFormPage, RouterLink]
+  imports: [IonicModule, CommonModule, FormsModule, CardCreateFormPage, CardUpdateFormPage, RouterLink, TranslateModule]
 })
 export class StackDetailsPage implements OnInit {
 
@@ -72,7 +73,8 @@ export class StackDetailsPage implements OnInit {
   constructor(
     private activeRoute: ActivatedRoute,
     private leardsStorage: Storage,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) { }
 
   /**
@@ -402,5 +404,10 @@ export class StackDetailsPage implements OnInit {
     }catch(error){
       this.router.navigateByUrl('home');
     }
+  }
+
+  getTranslatedDeletePrompt(key: string, cardName: string){
+    let translatedText = this.translateService.instant(key);
+    return translatedText+" "+cardName+"?";
   }
 }

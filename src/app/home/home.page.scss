@@ -94,3 +94,19 @@ button{
   background: hsl(210, 50%, 30%);
   color: #b6c4d3;
 }
+
+.custom-popover ion-select-popover ion-list {
+  background: #4550f5;
+}
+
+.custom-popover ion-select-popover ion-item {
+  --background: #45fe32;
+  --color: #4550f5;
+  --inner-border-width: 0;
+}
+
+.custom-popover ion-select-popover ion-radio {
+  --color: #a61134;
+  --color-checked: #4550f5;
+}
+

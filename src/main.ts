@@ -11,6 +11,14 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { Drivers } from '@ionic/storage';
 import * as cordovaSQLiteDriver from 'localforage-cordovasqlitedriver'
 
+import {  TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import  { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http: HttpClient){
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
+
 if (environment.production) {
   enableProdMode();
 }
@@ -25,7 +33,17 @@ bootstrapApplication(AppComponent, {
         cordovaSQLiteDriver._driver,
         Drivers.IndexedDB, Drivers.LocalStorage
       ],
-    }),),
+    })),
+    importProvidersFrom(HttpClientModule),
+    importProvidersFrom(TranslateModule.forRoot(
+      {
+        loader: {
+          provide: TranslateLoader,
+          useFactory: (createTranslateLoader),
+          deps:[HttpClient]
+        }
+      }
+    )),
     provideRouter(routes),
   ],
 });

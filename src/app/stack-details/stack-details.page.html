@@ -1,41 +1,41 @@
 <ion-content [fullscreen]="true">
-
+  
   <ion-menu side="end" contentId="main-content" [ngStyle]="{'--ion-background-color': currentStack.background_color}">
     <ion-header>
       <ion-toolbar>
-        <ion-title [ngStyle]="{color: currentStack.font_color}">Settings</ion-title>
+        <ion-title [ngStyle]="{color: currentStack.font_color}" translate>stack.settings.label</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <ion-grid [ngStyle]="{color: currentStack.font_color}">
         <ion-row>
-          <ion-col><strong class="optionSectionTitle">Order:</strong></ion-col>
+          <ion-col><strong class="optionSectionTitle" translate>stack.settings.label_order</strong></ion-col>
         </ion-row>
         <ion-radio-group (ionChange)="toggleStackLearnOptionsOrder($event)" value="{{currentStack.cards.order}}" class="ion-padding">
           <ion-row>
-            <ion-col><ion-label class="optionTitle">Ordered</ion-label></ion-col>
+            <ion-col><ion-label class="optionTitle" translate>stack.settings.ordered</ion-label></ion-col>
             <ion-col><ion-radio value="ordered" aria-label="front" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><ion-label class="optionTitle">Mixed</ion-label></ion-col>
+            <ion-col><ion-label class="optionTitle" translate>stack.settings.mixed</ion-label></ion-col>
             <ion-col><ion-radio value="mixed" aria-label="mixed" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
         </ion-radio-group>
 
         <ion-row>
-          <strong class="optionSectionTitle">Show first:</strong>
+          <strong class="optionSectionTitle" translate>stack.settings.label_show_first</strong>
         </ion-row>
         <ion-radio-group (ionChange)="toggleStackLearnOptionsShowFirst($event)" value="{{currentStack.cards.show_first}}" class="ion-padding">
           <ion-row>
-            <ion-col><ion-label class="optionTitle">Front</ion-label></ion-col>
+            <ion-col><ion-label class="optionTitle" translate>stack.settings.front</ion-label></ion-col>
             <ion-col><ion-radio value="front" aria-label="front" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><ion-label class="optionTitle">Back</ion-label></ion-col>
+            <ion-col><ion-label class="optionTitle" translate>stack.settings.back</ion-label></ion-col>
             <ion-col><ion-radio value="back" aria-label="back" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
           <ion-row>
-            <ion-col><ion-label class="optionTitle">Mixed</ion-label></ion-col>
+            <ion-col><ion-label class="optionTitle" translate>stack.settings.mixed</ion-label></ion-col>
             <ion-col><ion-radio value="mixed" aria-label="mixed" [ngStyle]="{'--color': currentStack.font_color, '--color-checked': currentStack.font_color}"></ion-radio></ion-col>
           </ion-row>
         </ion-radio-group>
@@ -56,10 +56,10 @@
     </ion-header>
     <ion-segment value="unskilled" (ionChange)="toggleLearnedAndUnskilled($event)">
       <ion-segment-button value='unskilled'>
-        <ion-label class="section">Learn</ion-label>
+        <ion-label class="section"translate>stack.learn</ion-label>
       </ion-segment-button>
       <ion-segment-button value='learned'>
-        <ion-label class="section">Learned</ion-label>
+        <ion-label class="section" translate>stack.learned</ion-label>
       </ion-segment-button>
     </ion-segment>
     <ion-content class="ion-padding">
@@ -107,7 +107,7 @@
               </ion-col>
               <ion-col size="1">
                 <button *ngIf="toggleDeleteCheck" [id]="'present-alert-'+card.id" class="deleteButton"><ion-icon name="trash-outline" class="checkButtonIcon"></ion-icon></button>
-                <ion-alert *ngIf="toggleDeleteCheck" [trigger]="'present-alert-'+card.id" [header]="'Delete Card?'" [buttons]="deleteAlertButtons" (didDismiss)="setDeleteResult($event, card)"></ion-alert>
+                <ion-alert *ngIf="toggleDeleteCheck" [trigger]="'present-alert-'+card.id" [header]="getTranslatedDeletePrompt('delete_card_prompt', card.front)" [buttons]="deleteAlertButtons" (didDismiss)="setDeleteResult($event, card)"></ion-alert>
                 <button *ngIf="toggleEditCheck" (click)="openEditCardModal(card)" class="editButton"><ion-icon name="settings-outline" class="checkButtonIcon"></ion-icon></button>
               </ion-col>
             </ion-row>

@@ -28,8 +28,8 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-button class="changeLearnedBtn" [ngStyle]="{'--background': backgroundColor, 'color': fontColor}" *ngIf="learnedStack === 0" expand="block" (click)="setCardToLearned($event, card)">Learned</ion-button>
-            <ion-button class="changeLearnedBtn" [ngStyle]="{'--background': backgroundColor, 'color': fontColor}" *ngIf="learnedStack === 1" expand="block" (click)="setCardToUnskilled($event, card)">Learn</ion-button>
+            <ion-button class="changeLearnedBtn" [ngStyle]="{'--background': backgroundColor, 'color': fontColor}" *ngIf="learnedStack === 0" expand="block" (click)="setCardToLearned($event, card)" translate>stack.learned</ion-button>
+            <ion-button class="changeLearnedBtn" [ngStyle]="{'--background': backgroundColor, 'color': fontColor}" *ngIf="learnedStack === 1" expand="block" (click)="setCardToUnskilled($event, card)" translate>stack.learn</ion-button>
           </ion-col>
         </ion-row>
       </swiper-slide>
@@ -39,7 +39,7 @@
             <ion-row>
               <ion-col size="12">
 
-                  <ion-button class="congrateButton" [ngStyle]="{'--background': backgroundColor, 'color': fontColor}" (click)="navigateToStackDetailsPage()">You are done.<br><br>Congratulations!</ion-button>
+                  <ion-button class="congrateButton" [ngStyle]="{'--background': backgroundColor, 'color': fontColor}" (click)="navigateToStackDetailsPage()" translate>stack.done<br><br>stack.congratulation</ion-button>
 
               </ion-col>
             </ion-row>

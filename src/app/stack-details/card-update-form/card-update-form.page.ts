@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Card } from 'src/app/interfaces/card';
 import { Stack } from 'src/app/interfaces/stack';
 
@@ -10,7 +11,7 @@ import { Stack } from 'src/app/interfaces/stack';
   templateUrl: './card-update-form.page.html',
   styleUrls: ['./card-update-form.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, TranslateModule]
 })
 export class CardUpdateFormPage implements OnInit {
 
@@ -32,7 +33,7 @@ export class CardUpdateFormPage implements OnInit {
       validators: [Validators.required]
     }),
   });
-  constructor() { }
+  constructor(private translateService: TranslateService) { }
 
   submitForm(){
 
@@ -50,6 +51,10 @@ export class CardUpdateFormPage implements OnInit {
     }
 
 
+  }
+
+  getTranslatedLanguage(key: string){
+    return this.translateService.instant(key);
   }
 
   ngOnInit() {
